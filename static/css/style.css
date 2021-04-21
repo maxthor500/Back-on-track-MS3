@@ -1,10 +1,14 @@
 /* import google font */
-@import url('https://fonts.googleapis.com/css2?family=Bungee&family=Roboto&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Balsamiq+Sans&family=Bungee&family=Roboto&display=swap');
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+}
+
+main {
+    font-family: 'Roboto', sans-serif;
 }
 
 /* my background color*/
@@ -66,5 +70,24 @@
     font-size: .8rem;
 }
 
+.register-panel {
+    margin-top: 1rem;
+}
 
+/* checkbox style */
+.form-switch {
+    background-color: rgba(255, 255, 255, .6);
+}
+
+.form-check-input:checked {
+    background-color: #00aac7;
+    border-color: #00aac7;
+}
+
+/* error messageg style */
+.msg-error {
+    background-color: #00aac7;
+    color: black;
+    font-family: 'Balsamiq Sans', cursive;
+}
 

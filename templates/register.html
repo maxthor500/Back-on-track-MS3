@@ -1,8 +1,20 @@
 {% extends "base.html" %}
 {% block content %}
     <main class="container">
+        <!-- error message section (email incorrect and password not match)-->
+        <section class="row text-center">
+                  {% for error in form.email.errors %}
+                      <span class="msg-error">{{ error }}</span><br>
+                  {% endfor %}
+                  {% for error in form.password.errors %}
+                      <span style="background-color: red;">{{ error }}</span><br>
+                  {% endfor %}
+                  {% for error in form.password2.errors %}
+                      <span style="background-color: red;">{{ error }}</span>br
+                  {% endfor %}
+        </section>
         <!-- card container from Bootstrap -->
-        <section class="row justify-content-md-center">
+        <section class="row justify-content-md-center register-panel">
           <figure class="col-sm-6 text-center">
             <img src="../static/images/BackOnTrackHero.svg" class="img-thumbnail border-0" alt="Connect the World">
           </figure>
@@ -10,19 +22,29 @@
             <h5 class="font-bungee text-center">Register Now</h5>
             <!-- Register form -->
             <form class="card-body" method="POST" action="{{ url_for('register') }}">
+                {{ form.csrf_token }}
                 <!-- email -->
                 <div class="input-container mb-3">
                     <label for="email" class="form-label"><i class="fas fa-user-plus icon"></i></label>
-                    <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp" placeholder="Email Address">
+                    <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp" size="32" placeholder="Email Address" required>
                 </div>
                 <!-- password -->
                 <div class="input-container mb-3">
                     <label for="password" class="form-label"><i class="fas fa-user-lock icon"></i></label>
-                    <input type="password" class="form-control" name="password" id="password" placeholder="Password">
+                    <input type="password" class="form-control" name="password" id="password" placeholder="Password" size="32" required>
+                </div>
+                <!-- password2 -->
+                <div class="input-container mb-3">
+                    <label for="password2" class="form-label"><i class="fas fa-lock icon"></i></label>
+                    <input type="password" class="form-control" name="password2" id="password2" placeholder="Repeat Password" size="32" required>
+                </div>
+                <div class="text-center mb-3 form-switch">
+                  <input id="remember_me" name="remember_me" type="checkbox" class="form-check-input" value="y">
+                  <label for="remember_me" class="form-check-label">Remember Me</label>
                 </div>
                 <!-- register button -->
                 <div class="text-center mb-3">
-                  <button type="submit" class="btn target font-bungee">Register &nbsp; <i class="fas fa-sign-in-alt"></i></button>
+                  <button type="submit" name="submit" class="btn target font-bungee">Register &nbsp; <i class="fas fa-sign-in-alt"></i></button>
                 </div>
                 <div class="col-sm">
                   <p class="text-center">
