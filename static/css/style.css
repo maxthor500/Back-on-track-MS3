@@ -1,0 +1,70 @@
+/* import google font */
+@import url('https://fonts.googleapis.com/css2?family=Bungee&family=Roboto&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* my background color*/
+.bg-mycolor {
+    background-color: #00aac7 !important;
+}
+/* navbar */
+.navbar {
+    margin-bottom: 2rem;
+}
+
+.navbar-brand {
+    font-size: large;
+}
+
+/* navbar and header font */
+.font-bungee {
+    font-family: 'Bungee', cursive;
+}
+
+/* hero image */
+.img-thumbnail {
+    max-width: 18rem;
+}
+
+/* form card overlay to image with min width of the screen 576px */
+.card {
+    position: absolute;
+    background-color: rgba(255, 255, 255, .1);
+}
+
+@media all and (min-width: 36em) {
+    .card {
+        position: relative;
+        max-width: 30rem;
+    }
+}
+
+.input-container {
+    display: flex;
+    width: 100%;
+    margin-top: .9rem 0;
+  }
+
+.icon {
+    color: #00aac7;
+    margin-top: .2rem;
+    min-width: 3.5rem;
+    text-align: center;
+}
+
+.btn {
+    border: solid .1rem black;
+    background-color: #f46f9b;
+}
+
+.card-body div p {
+    font-family: 'Roboto', sans-serif;
+    font-size: .8rem;
+}
+
+
+

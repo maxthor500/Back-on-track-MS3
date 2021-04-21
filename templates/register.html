@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block content %}
+    <main class="container">
+        <!-- card container from Bootstrap -->
+        <section class="row justify-content-md-center">
+          <figure class="col-sm-6 text-center">
+            <img src="../static/images/BackOnTrackHero.svg" class="img-thumbnail border-0" alt="Connect the World">
+          </figure>
+          <div class="card col-sm-6 border-0">
+            <h5 class="font-bungee text-center">Register Now</h5>
+            <!-- Register form -->
+            <form class="card-body" method="POST" action="{{ url_for('register') }}">
+                <!-- email -->
+                <div class="input-container mb-3">
+                    <label for="email" class="form-label"><i class="fas fa-user-plus icon"></i></label>
+                    <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp" placeholder="Email Address">
+                </div>
+                <!-- password -->
+                <div class="input-container mb-3">
+                    <label for="password" class="form-label"><i class="fas fa-user-lock icon"></i></label>
+                    <input type="password" class="form-control" name="password" id="password" placeholder="Password">
+                </div>
+                <!-- register button -->
+                <div class="text-center mb-3">
+                  <button type="submit" class="btn target font-bungee">Register &nbsp; <i class="fas fa-sign-in-alt"></i></button>
+                </div>
+                <div class="col-sm">
+                  <p class="text-center">
+                      Already Registered?
+                      <a href="#">Login <i class="fas fa-arrow-alt-circle-right"></i></a>
+                  </p>
+              </div>
+            </form>
+          </div>
+        </section>
+      </main>
+{% endblock %}
