@@ -1,13 +1,34 @@
 {% extends "base.html" %}
 {% block nav_index %}active{% endblock %}
 {% block content %}
-
-    {% for post in posts %}
-        {{ post.post_name }} <br>
-        {{ post.category_name}} <br>
-        {{ post.post_description }} <br>
-        {{ post.post_date }} <br>
-        {{ post.created_by }} <br>
-    {% endfor %}
+    <!-- card container from Bootstrap -->
+    <section class="row justify-content-md-center register-panel">
+        <figure class="col-sm-6 text-center">
+            <img src="../static/images/BackOnTrackHero.svg" class="img-thumbnail border-0" alt="Connect the World">
+        </figure>
+        <div class="card col-sm-6 border-0 justify-content-md-center mt-5">
+            <!-- login button -->
+            <div class="text-center">
+                <a href="{{ url_for('login') }}" class="btn target font-bungee btn2">Login &nbsp; <i class="fas fa-sign-in-alt"></i></a>
+            </div>
+            <!-- register button -->
+            <div class="text-center">
+                <a href="{{ url_for('register') }}" class="btn target font-bungee mt-5">Register &nbsp; <i class="fas fa-sign-in-alt"></i></a>
+            </div>
+        </div>
+    </section>
+    <!-- about container -->
+    <section class="row justify-content-md-center register-panel">
+        <div class="col-sm-6 d-flex align-items-center justify-content-center">
+          <h1 class="font-bungee">ABOUT US</h1>
+        </div>
+        <div class="col-sm-6 border-0">
+          <p class="description text-center"><strong class="font-bungee">Back On Track</strong> is a place for those who need help improving their resume.<br>
+            Share your skills with others so that everyone can advise you on how to build your resume.<br>
+            If you've gotten lost looking for a job, starting to think you're no longer worth anything, 
+            getting back on track can help you regain your skills.
+          </p>
+        </div>
+    </section>
 
 {% endblock %}

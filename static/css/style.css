@@ -63,6 +63,7 @@ main {
 .btn {
     border: solid .1rem black;
     background-color: #f46f9b;
+    min-width: 9rem;
 }
 
 .card-body div p {
