@@ -84,6 +84,14 @@ def register():
     return render_template('register.html', title='Register', form=form)
 
 
+@app.route('/logout')
+def logout():
+    """Clears session and redirects to home"""
+    flash("You have been logged out")
+    session.clear()
+    return redirect(url_for('index'))
+
+
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),
             port=int(os.environ.get("PORT")),
