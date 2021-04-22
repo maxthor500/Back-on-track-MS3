@@ -92,6 +92,10 @@ def logout():
     return redirect(url_for('index'))
 
 
+@app.route('/about')
+def about():
+    return render_template('about.html', title='About')
+
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),
             port=int(os.environ.get("PORT")),

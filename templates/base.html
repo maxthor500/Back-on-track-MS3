@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" type="text/css">
     {% block styles %}
     {% endblock %}
-    <title>Back On Track</title>
+    <title>Back On Track {{ title }}</title>
 </head>
 <body>
 
@@ -35,7 +35,7 @@
                     <a class="nav-link {% block nav_index %}{% endblock %}"  href="{{ url_for('index') }}">Home</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link {% block nav_about %}{% endblock %}" href="#">About</a>
+                    <a class="nav-link {% block nav_about %}{% endblock %}" href="{{ url_for('about') }}">About</a>
                   </li>
                   <li class="nav-item">
                     <a class="nav-link {% block nav_contact %}{% endblock %}" href="#">Contact</a>

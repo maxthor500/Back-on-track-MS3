@@ -91,3 +91,10 @@ main {
     font-family: 'Balsamiq Sans', cursive;
 }
 
+/* about paragraph */
+.description {
+    font-family: 'Balsamiq Sans', cursive;
+    text-transform: uppercase;
+    padding: 1rem;
+}
+
