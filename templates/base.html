@@ -32,30 +32,30 @@
               <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                   <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="{{ url_for('get_posts') }}">Home</a>
+                    <a class="nav-link {% block nav_index %}{% endblock %}"  href="{{ url_for('index') }}">Home</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="#">About</a>
+                    <a class="nav-link {% block nav_about %}{% endblock %}" href="#">About</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="#">Contact</a>
+                    <a class="nav-link {% block nav_contact %}{% endblock %}" href="#">Contact</a>
                   </li>
-                  {% if session.user %}
+                  {% if 'email' in session %}
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Profile</a>
+                        <a class="nav-link {% block nav_profile %}{% endblock %}" href="#">Profile</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Dashboard</a>
+                        <a class="nav-link {% block nav_dashboard %}{% endblock %}" href="#">Dashboard</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Logout</a>
+                        <a class="nav-link {% block nav_logout %}{% endblock %}" href="#">Logout</a>
                     </li>
                   {% else %}
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Login</a>
+                        <a class="nav-link {% block nav_login %}{% endblock %}" href="{{ url_for('login') }}">Login</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('register') }}">Register</a>
+                        <a class="nav-link {% block nav_register %}{% endblock %}" href="{{ url_for('register') }}">Register</a>
                     </li>
                   {% endif %}
                 </ul>
@@ -64,8 +64,11 @@
         </nav>
     </header>
     
-    {% block content %}
-    {% endblock %}
+    <main class="container">
+      {% block content %}
+      {% endblock %}
+    </main>
+    
 
     <!-- JQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" 

@@ -4,7 +4,7 @@ from flask import (
     redirect, request, session, url_for)
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
-from forms import RegisterForm
+from forms import RegisterForm, LoginForm
 import bcrypt
 if os.path.exists("env.py"):
     import env
@@ -20,10 +20,43 @@ mongo = PyMongo(app)
 
 
 @app.route("/")
+@app.route('/index')
+def index():
+    return render_template('index.html')
+
+
 @app.route("/get_posts")
 def get_posts():
     posts = mongo.db.posts.find()
     return render_template("posts.html", posts=posts)
+
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    """Login handler"""
+    if session.get('logged_in'):
+        if session['logged_in'] is True:
+            return redirect(url_for('index', title="Sign In"))
+
+    form = LoginForm()
+
+    if form.validate_on_submit():
+        # get all users
+        users = mongo.db.users
+        # try and get one with same name as entered
+        db_user = users.find_one({'email': request.form['email']})
+
+        if db_user:
+            # check password using hashing
+            if bcrypt.hashpw(request.form['password'].encode('utf-8'),
+                             db_user['password']) == db_user['password']:
+                session['email'] = request.form['email']
+                session['logged_in'] = True
+                # successful redirect to home logged in
+                return redirect(url_for('index', title="Sign In", form=form))
+            # must have failed set flash message
+            flash('Invalid email/password combination')
+    return render_template("login.html", title="Sign In", form=form)
 
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -44,9 +77,9 @@ def register():
             users.insert_one({'email': request.form['email'],
                               'password': hash_pass})
             session['email'] = request.form['email']
-            return redirect(url_for('get_posts'))
+            return redirect(url_for('index'))
         # duplicate username set flash message and reload page
-        flash('Sorry, that username is already taken - use another')
+        flash('Sorry, that email is already registered - try to login')
         return redirect(url_for('register'))
     return render_template('register.html', title='Register', form=form)
 
