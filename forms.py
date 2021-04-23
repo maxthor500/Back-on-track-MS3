@@ -16,9 +16,9 @@ class RegisterForm(FlaskForm):
                                                      Length(min=6, max=35),
                                                      Email()])
     regex = '^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$'
-    message_error = """The password must contain at least 8 characters
+    message_error = """Password must contain at least 8 characters
                      long and contain at least one number,
-                     un uppercase letter and one special character!"""
+                     an uppercase letter and one special character!"""
     password = PasswordField('Password',
                              validators=[DataRequired(),
                                          Regexp(regex, message=message_error),

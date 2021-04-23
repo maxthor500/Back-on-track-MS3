@@ -13,7 +13,9 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" type="text/css">
     {% block styles %}
     {% endblock %}
-    <title>Back On Track {{ title }}</title>
+    {% block emailjs %}
+    {% endblock %}
+    <title>Back On Track</title>
 </head>
 <body>
 
@@ -23,7 +25,7 @@
               <a href="{{ url_for('get_posts') }}">
                 <img height="50" src="{{ url_for('static', filename='images/LogoBOT.svg') }}" alt="LogoBOT">
               </a>
-              <a class="navbar-brand" href="{{ url_for('get_posts') }}">
+              <a class="navbar-brand" href="{{ url_for('index') }}">
                 Back On Track
               </a>
               <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -38,7 +40,7 @@
                     <a class="nav-link {% block nav_about %}{% endblock %}" href="{{ url_for('about') }}">About</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link {% block nav_contact %}{% endblock %}" href="#">Contact</a>
+                    <a class="nav-link {% block nav_contact %}{% endblock %}" href="{{ url_for('contact') }}">Contact</a>
                   </li>
                   {% if 'email' in session %}
                     <li class="nav-item">

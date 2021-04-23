@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block emailjs %}
+    <!-- EmailJS init -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/emailjs-com@2/dist/email.min.js"></script>
+    <script type="text/javascript">
+        (function() {
+            emailjs.init('user_lgUICfXy7c97VwsOb5u8X');
+        })();
+    </script>
+{% endblock %}
+{% block nav_login %}active{% endblock %}
+{% block content %}
+    <!-- Form -->
+    <section class="row justify-content-md-center">
+        <form class="contact-form">
+              <legend class="font-bungee text-center">Contact Us</legend>
+                <div class="mb-3">
+                    <label for="name" class="form-label"><i class="far fa-user"></i> Name</label>
+                    <input class="form-control" id="name" name="user_name" placeholder="Enter name" required>
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label"><i class="far fa-envelope"></i> Email address</label>
+                    <input class="form-control" type="email" id="email" name="user_email" placeholder="Enter email" required />
+                </div>
+                <div class="mb-3">
+                    <label for="textarea" class="form-label"><i class="far fa-question-circle"></i> Request</label>
+                    <textarea class="form-control" id="textarea" name="info_request" rows="5" placeholder="Insert your request here" required></textarea>
+                </div>
+                <div class="text-center mb-3">
+                  <button type="submit" id="send-mail" name="submit" class="btn target font-bungee">Send Mail &nbsp; <i class="fas fa-share-square"></i></button>
+                </div>
+        </form>
+  </section>
+{% endblock %}
+{% block scripts %}
+<!-- send email script -->
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+{% endblock %}
+

@@ -99,3 +99,10 @@ main {
     padding: 1rem;
 }
 
+/* contact form size */
+.contact-form {
+    max-width: 32rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    font-family: 'Balsamiq Sans', cursive;
+}
