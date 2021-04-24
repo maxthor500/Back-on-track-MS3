@@ -36,7 +36,7 @@ def login():
     """Login handler"""
     if session.get('logged_in'):
         if session['logged_in'] is True:
-            return redirect(url_for('index', title="Sign In"))
+            return redirect(url_for('index', title='Home'))
 
     form = LoginForm()
 
@@ -56,7 +56,7 @@ def login():
                 return redirect(url_for('index', title="Sign In", form=form))
             # must have failed set flash message
             flash('Invalid email/password combination')
-    return render_template("login.html", title="Sign In", form=form)
+    return render_template("login.html", title="Login", form=form)
 
 
 @app.route('/register', methods=['GET', 'POST'])

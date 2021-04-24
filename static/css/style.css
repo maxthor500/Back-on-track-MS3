@@ -100,7 +100,7 @@ main {
 }
 
 /* contact form size */
-.contact-form {
+#contact-form {
     max-width: 32rem;
     padding-left: 2rem;
     padding-right: 2rem;

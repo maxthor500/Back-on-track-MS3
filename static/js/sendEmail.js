@@ -1,4 +1,4 @@
-const btn = document.getElementById('send-mail');
+const btn = document.getElementById('button');
 
 document.getElementById('contact-form')
     .addEventListener('submit', function(event) {
