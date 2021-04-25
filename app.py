@@ -108,19 +108,20 @@ def add_posts():
     """Creates a posts and enters into my collection"""
     form = CreatePostForm(request.form)
     if request.method == "POST":
-        share_post = True if request.form.get("share_post") else False
+        share_post = "on" if request.form.get("share_post") else "off"
+        post = {
+            'post_title': request.form["post_title"],
+            'created_by': session['email'],
+            'post_description': request.form["post_description"],
+            'share_post': share_post,
+            'category_name': request.form["category_name"],
+            'post_date': request.form["post_date"]
+        }
         if form.validate_on_submit():
             # set the collection
             posts_db = mongo.db.posts
             # insert the new post
-            posts_db.insert_one({
-                'post_title': request.form("post_title"),
-                'created_by': session['email'],
-                'post_description': request.form("post_description"),
-                'share_post': share_post,
-                'category_name': request.form("categroy_name"),
-                'post_date': request.form('post_date')
-            })
+            posts_db.insert_one(post)
             flash("Post Successfully Added")
             return redirect(url_for('index', title='New Post Added'))
         else:

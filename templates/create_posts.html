@@ -11,11 +11,11 @@
             {% endif %}
         {% endwith %}
     </section>
-    <section class="row justify-content-md-center register-panel">
+    <section class="row justify-content-md-center mt-1rem">
         <div class="card">
-            <h5 class="font-bungee text-center">Add a Post</h5>
+            <h5 class="font-bungee text-center mt-1rem">Add a Post</h5>
             <!-- create post form -->
-            <form class="card-body" method="POST" action="{{ url_for('add_posts') }}" enctype="multipart/form-data">
+            <form class="card-body" method="POST" action="{{ url_for('add_posts') }}">
                 {{ form.csrf_token }}
                 <!-- select a category -->
                 <div class="mb-3">
@@ -49,7 +49,6 @@
                 <div class="text-center mb-3">
                     {{ form.submit(class="btn target font-bungee") }}
                 </div>
-
             </form>
         </div>
     </section>
