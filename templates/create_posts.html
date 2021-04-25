@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block nav_addpost %}active{% endblock %}
+{% block content %}
+    <section class="row text-center">
+        <!-- flash messages -->
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                    <span class="msg-error">{{ message }}</span><br>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </section>
+    <section class="row justify-content-md-center register-panel">
+        <div class="card">
+            <h5 class="font-bungee text-center">Add a Post</h5>
+            <!-- create post form -->
+            <form class="card-body" method="POST" action="{{ url_for('add_posts') }}" enctype="multipart/form-data">
+                {{ form.csrf_token }}
+                <!-- select a category -->
+                <div class="mb-3">
+                    {{ form.category_name.label(class="form-label") }}
+                    <select class="form-control" id="category_name" name="category_name">
+                        <option value="" disabled selected hidden>Choose a Category</option>
+                        {% for category in categories %}
+                            <option value="{{ category.category_name }}">{{ category.category_name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <!-- title's post -->
+                <div class="mb-3">
+                    {{ form.post_title.label(class="form-label") }}
+                    {{ form.post_title(size=80, class="form-control") }}
+                </div>
+                <!-- description's post-->
+                <div class="mb-3">
+                    {{ form.post_description.label(class="form-label") }}
+                    {{ form.post_description(cols="120", rows="3", class="form-control") }}
+                </div>
+                <!-- share boolean input -->
+                <div class="mb-3 form-switch">
+                    {{ form.share_post(class="form-check-input") }}
+                    <label for="share_post" class="form-check-label">Share</label>
+                </div>
+                <!-- set now date in the form -->
+                <div class="mb-3">
+                    {{ form.post_date }}
+                </div>
+                <div class="text-center mb-3">
+                    {{ form.submit(class="btn target font-bungee") }}
+                </div>
+
+            </form>
+        </div>
+    </section>
+
+{% endblock %}

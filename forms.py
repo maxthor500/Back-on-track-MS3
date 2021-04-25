@@ -1,6 +1,8 @@
 from flask_wtf import FlaskForm
+from datetime import datetime
 from wtforms import (
-    StringField, PasswordField, BooleanField, SubmitField)
+    StringField, SelectField, PasswordField, BooleanField,
+    TextAreaField, SubmitField, DateTimeField)
 from wtforms.validators import DataRequired, Length, EqualTo, Email, Regexp
 
 
@@ -27,3 +29,14 @@ class RegisterForm(FlaskForm):
     password2 = PasswordField('Repeat Password')
     remember_me = BooleanField('Remember Me')
     submit = SubmitField('Register')
+
+
+class CreatePostForm(FlaskForm):
+    post_title = StringField('Title', validators=[DataRequired()])
+    category_name = SelectField("Category")
+    post_description = TextAreaField('Post Description',
+                                     validators=[DataRequired()])
+    post_date = DateTimeField("Enter Date", default=datetime.utcnow,
+                              format="%d/%m/%Y")
+    share_post = BooleanField()
+    submit = SubmitField('Add Post')

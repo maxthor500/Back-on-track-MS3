@@ -2,12 +2,17 @@
 {% block nav_index %}active{% endblock %}
 {% block content %}
 
-    {% for post in posts %}
-        {{ post.post_name }} <br>
-        {{ post.category_name}} <br>
-        {{ post.post_description }} <br>
-        {{ post.post_date }} <br>
-        {{ post.created_by }} <br>
-    {% endfor %}
+    <section class="row justify-content-md-center register-panel">
+        {% for post in posts %}
+            <div>
+
+            </div>
+            {{ post.post_name }} <br>
+            {{ post.category_name}} <br>
+            {{ post.post_description }} <br>
+            {{ post.post_date }} <br>
+            {{ post.created_by }} <br>
+        {% endfor %}
+    </section>
 
 {% endblock %}

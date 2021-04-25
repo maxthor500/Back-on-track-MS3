@@ -4,7 +4,7 @@ from flask import (
     redirect, request, session, url_for)
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
-from forms import RegisterForm, LoginForm
+from forms import RegisterForm, LoginForm, CreatePostForm
 import bcrypt
 if os.path.exists("env.py"):
     import env
@@ -99,7 +99,36 @@ def about():
 
 @app.route('/contact')
 def contact():
+    """Render Contact template to use EmailJS"""
     return render_template('contact.html', title='Contact')
+
+
+@app.route('/add_posts', methods=['GET', 'POST'])
+def add_posts():
+    """Creates a posts and enters into my collection"""
+    form = CreatePostForm(request.form)
+    if request.method == "POST":
+        share_post = True if request.form.get("share_post") else False
+        if form.validate_on_submit():
+            # set the collection
+            posts_db = mongo.db.posts
+            # insert the new post
+            posts_db.insert_one({
+                'post_title': request.form("post_title"),
+                'created_by': session['email'],
+                'post_description': request.form("post_description"),
+                'share_post': share_post,
+                'category_name': request.form("categroy_name"),
+                'post_date': request.form('post_date')
+            })
+            flash("Post Successfully Added")
+            return redirect(url_for('index', title='New Post Added'))
+        else:
+            flash("Something wrong! Post not Added")
+    categories = mongo.db.categories.find().sort("category_name", 1)
+    return render_template('create_posts.html',
+                           title='add a post', form=form,
+                           categories=categories)
 
 
 if __name__ == "__main__":
