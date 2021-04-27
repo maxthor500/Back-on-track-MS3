@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" type="text/css">
     {% block styles %}
     {% endblock %}
-    {% block emailjs_init%}
+    {% block js_library %}
     {% endblock%}
     <title>Back On Track - {{ title }}</title>
 </head>
@@ -23,7 +23,7 @@
         <nav class="navbar navbar-expand-lg navbar-light bg-mycolor font-bungee" >
             <div class="container-fluid">
               <a href="{{ url_for('get_posts') }}">
-                <img height="50" src="{{ url_for('static', filename='images/LogoBOT.svg') }}" alt="LogoBOT">
+                <img height="50" width="70" src="{{ url_for('static', filename='images/LogoBOT.svg') }}" alt="LogoBOT">
               </a>
               <a class="navbar-brand" href="{{ url_for('index') }}">
                 Back On Track

@@ -6,4 +6,3 @@ $(window).on("load resize", function() {
     $('.target').toggleClass('bg-mycolor', $(window).width() > 575);
     $('.btn2').toggleClass('mt-5', $(window).width() < 767);
 });
-

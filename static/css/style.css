@@ -40,7 +40,7 @@ main {
     background-color: rgba(255, 255, 255, .1);
 }
 
-@media all and (min-width: 36em) {
+@media screen and (min-width: 36em) {
     .card {
         position: relative;
         max-width: 30rem;
@@ -105,4 +105,14 @@ main {
     padding-left: 2rem;
     padding-right: 2rem;
     font-family: 'Balsamiq Sans', cursive;
+}
+
+/* map */
+#mapid {
+    margin: 1.2rem;
+    width: 100%;
+}
+
+.mt-2rem{
+    margin-top: 2rem;
 }

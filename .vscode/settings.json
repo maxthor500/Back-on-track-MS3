@@ -22,5 +22,6 @@
    "emmet.extensionsPath": [
       ".theia"
    ],
-   "python.formatting.provider": "black"
+   "python.formatting.provider": "black",
+   "python.pythonPath": "C:\\Users\\fox_i\\AppData\\Local\\Programs\\Python\\Python39\\python.exe"
 }
