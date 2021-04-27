@@ -27,6 +27,7 @@ class RegisterForm(FlaskForm):
                                          EqualTo('password2',
                                          message='Passwords must match')])
     password2 = PasswordField('Repeat Password')
+    username = StringField('Full Name', default='')
     remember_me = BooleanField('Remember Me')
     submit = SubmitField('Register')
 

@@ -73,9 +73,18 @@ def register():
             # hash the entered password
             hash_pass = bcrypt.hashpw(request.form['password'].encode('utf-8'),
                                       bcrypt.gensalt())
+            # user object
+            user = {
+                    'email': request.form['email'],
+                    'password': hash_pass,
+                    'name': '',
+                    'image_profile': './static/images/anonymity.png',
+                    'linkedin_url': '',
+                    'website_url': '',
+                    'share_profile': 'off'
+                    }
             # insert the user to DB
-            users.insert_one({'email': request.form['email'],
-                              'password': hash_pass})
+            users.insert_one(user)
             session['email'] = request.form['email']
             return redirect(url_for('index'))
         # duplicate username set flash message and reload page
@@ -109,9 +118,10 @@ def add_posts():
     form = CreatePostForm(request.form)
     if request.method == "POST":
         share_post = "on" if request.form.get("share_post") else "off"
+        created_by = session['name'] if session['name'] else session['email']
         post = {
             'post_title': request.form["post_title"],
-            'created_by': session['email'],
+            'created_by': created_by,
             'post_description': request.form["post_description"],
             'share_post': share_post,
             'category_name': request.form["category_name"],
@@ -130,6 +140,17 @@ def add_posts():
     return render_template('create_posts.html',
                            title='add a post', form=form,
                            categories=categories)
+
+
+@app.route("/profile/<username>", methods=["GET", "POST"])
+def profile(username):
+    # grab the session user's email from db
+    username = mongo.db.users.find_one({"email": session["email"]})['email']
+
+    if session["email"]:
+        return render_template("profile.html", username=username)
+
+    return redirect(url_for("login"))
 
 
 if __name__ == "__main__":
