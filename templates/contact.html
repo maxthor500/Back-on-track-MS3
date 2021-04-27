@@ -1,5 +1,14 @@
 {% extends "base.html" %}
 {% block nav_contact %}active{% endblock %}
+{% block emailjs_init %}
+    <!-- EmailJS init -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/emailjs-com@2/dist/email.min.js"></script>
+    <script type="text/javascript">
+        (function() {
+            emailjs.init("user_hfmRd8ZoJ0XRxL3hMA6lI");
+        })();
+    </script>
+{% endblock %}
 {% block content %}
     <!-- Form -->
     <section class="row justify-content-md-center">
@@ -23,3 +32,8 @@
         </form>
     </section>
 {% endblock %}
+{% block scripts %}
+    <!-- send email script -->
+    <script src="{{ url_for('static', filename='js/sendEmail.js') }}"></script>
+{% endblock %}
+
