@@ -33,7 +33,7 @@ class RegisterForm(FlaskForm):
 
 class CreatePostForm(FlaskForm):
     post_title = StringField('Title', validators=[DataRequired()])
-    category_name = SelectField("Category", validators=[DataRequired()])
+    category_name = SelectField("Category", validators=[DataRequired()], validate_choice=False)
     post_description = TextAreaField('Post Description',
                                      validators=[DataRequired()])
     post_date = DateTimeField("Enter Date", default=datetime.utcnow,

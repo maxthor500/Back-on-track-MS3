@@ -1,16 +1,6 @@
 {% extends "base.html" %}
 {% block nav_addpost %}active{% endblock %}
 {% block content %}
-    <section class="row text-center">
-        <!-- flash messages -->
-        {% with messages = get_flashed_messages() %}
-            {% if messages %}
-                {% for message in messages %}
-                    <span class="msg-error">{{ message }}</span><br>
-                {% endfor %}
-            {% endif %}
-        {% endwith %}
-    </section>
     <section class="row justify-content-md-center mt-1rem">
         <div class="card">
             <h5 class="font-bungee text-center mt-1rem">Add a Post</h5>
