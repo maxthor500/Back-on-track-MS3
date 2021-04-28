@@ -3,6 +3,9 @@
 {% block content %}
         <!-- error message section (email incorrect and password not match)-->
         <section class="row text-center">
+                  {% for error in form.username.errors %}
+                      <span class="msg-error">{{ error }}</span><br>
+                  {% endfor %}
                   {% for error in form.email.errors %}
                       <span class="msg-error">{{ error }}</span><br>
                   {% endfor %}
@@ -16,16 +19,21 @@
         <!-- card container from Bootstrap -->
         <section class="row justify-content-md-center mt-1rem">
           <figure class="col-sm-6 text-center">
-            <img src="../static/images/BackOnTrackHero.svg" class="img-thumbnail border-0" alt="Connect the World">
+            <img src="{{ url_for('static', filename='images/BackOnTrackHero.svg') }}" class="img-thumbnail border-0" alt="Connect the World">
           </figure>
           <div class="card col-sm-6 border-0">
             <h5 class="font-bungee text-center">Register Now</h5>
             <!-- Register form -->
             <form class="card-body" method="POST" action="{{ url_for('register') }}">
                 {{ form.csrf_token }}
+                <!-- username -->
+                <div class="input-container mb-3">
+                    <label for="username" class="form-label"><i class="fas fa-user-plus icon"></i></label>
+                    <input type="username" class="form-control" id="username" name="username" size="20" placeholder="Username" required>
+                </div>
                 <!-- email -->
                 <div class="input-container mb-3">
-                    <label for="email" class="form-label"><i class="fas fa-user-plus icon"></i></label>
+                    <label for="email" class="form-label"><i class="fas fa-fa-envelope icon"></i></label>
                     <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp" size="32" placeholder="Email Address" required>
                 </div>
                 <!-- password -->
