@@ -116,3 +116,12 @@ main {
 .mt-2rem{
     margin-top: 2rem;
 }
+
+/* profile image */
+.profile-image {
+    height: 2rem;
+    width: 2rem;
+}
+
+
+

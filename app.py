@@ -24,7 +24,7 @@ mongo = PyMongo(app)
 def index():
     return render_template('index.html', title='Home')
 
-
+#test function
 @app.route("/get_posts")
 def get_posts():
     posts = mongo.db.posts.find()
@@ -44,13 +44,13 @@ def login():
         # get all users
         users = mongo.db.users
         # try and get one with same name as entered
-        db_user = users.find_one({'email': request.form['email']})
-
+        db_user = users.find_one({'username': request.form['username']})
+        
         if db_user:
             # check password using hashing
             if bcrypt.hashpw(request.form['password'].encode('utf-8'),
                              db_user['password']) == db_user['password']:
-                session['email'] = request.form['email']
+                session['username'] = request.form['username'].lower()
                 session['logged_in'] = True
                 # successful redirect to home logged in
                 return redirect(url_for('index', title="Sign In", form=form))
@@ -67,7 +67,7 @@ def register():
         # get all the users
         users = mongo.db.users
         # see if we already have the entered username
-        existing_user = users.find_one({'email': request.form['email']})
+        existing_user = users.find_one({'username': request.form['username']}).lower()
 
         if existing_user is None:
             # hash the entered password
@@ -77,18 +77,18 @@ def register():
             user = {
                     'email': request.form['email'],
                     'password': hash_pass,
-                    'name': '',
-                    'image_profile': './static/images/anonymity.png',
+                    'username': request.form['username'].lower(),
+                    'image_profile': '/static/images/anonymity.png',
                     'linkedin_url': '',
                     'website_url': '',
                     'share_profile': 'off'
                     }
             # insert the user to DB
             users.insert_one(user)
-            session['email'] = request.form['email']
+            session['username'] = request.form['username'].lower()
             return redirect(url_for('index'))
         # duplicate username set flash message and reload page
-        flash('Sorry, that email is already registered - try to login')
+        flash('Sorry, that username is already registered - try to login')
         return redirect(url_for('register'))
     return render_template('register.html', title='Register', form=form)
 
@@ -100,7 +100,7 @@ def logout():
     session.clear()
     return redirect(url_for('index'))
 
-
+#render about page with map
 @app.route('/about')
 def about():
     return render_template('about.html', title='About')
@@ -118,10 +118,9 @@ def add_posts():
     form = CreatePostForm(request.form)
     if request.method == "POST":
         share_post = "on" if request.form.get("share_post") else "off"
-        created_by = session['name'] if session['name'] else session['email']
         post = {
             'post_title': request.form["post_title"],
-            'created_by': created_by,
+            'created_by': session['username'],
             'post_description': request.form["post_description"],
             'share_post': share_post,
             'category_name': request.form["category_name"],
@@ -144,11 +143,11 @@ def add_posts():
 
 @app.route("/profile/<username>", methods=["GET", "POST"])
 def profile(username):
-    # grab the session user's email from db
-    username = mongo.db.users.find_one({"email": session["email"]})['email']
-
-    if session["email"]:
-        return render_template("profile.html", username=username)
+    # grab the session user from db
+    username = mongo.db.users.find_one({"username": session["username"]})['username']
+    image = mongo.db.users.find_one({"username": session["username"]})['image_profile']
+    if session["username"]:
+        return render_template("profile.html", username=username, image=image)
 
     return redirect(url_for("login"))
 
