@@ -7,13 +7,14 @@ from wtforms.validators import DataRequired, Length, EqualTo, Email, Regexp
 
 
 class LoginForm(FlaskForm):
-    email = StringField('Email Address', validators=[DataRequired(), Email()])
+    username = StringField('Username', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
     remember_me = BooleanField('Remember Me')
     submit = SubmitField('Sign In')
 
 
 class RegisterForm(FlaskForm):
+    username = StringField('Username', validators=[DataRequired(), Length(min=4, max=20)])
     email = StringField('Email Address', validators=[DataRequired(),
                                                      Length(min=6, max=35),
                                                      Email()])
@@ -27,7 +28,6 @@ class RegisterForm(FlaskForm):
                                          EqualTo('password2',
                                          message='Passwords must match')])
     password2 = PasswordField('Repeat Password')
-    username = StringField('Full Name', default='')
     remember_me = BooleanField('Remember Me')
     submit = SubmitField('Register')
 
