@@ -44,9 +44,6 @@
                   </li>
                   {% if 'username' in session %}
                     <li class="nav-item">
-                      <a class="nav-link {% block nav_addpost %}{% endblock %}" href="{{ url_for('add_posts') }}">Add a Post</a>
-                    </li>
-                    <li class="nav-item">
                         <a class="nav-link {% block nav_profile %}{% endblock %}" href="{{ url_for('profile', username=session['username']) }}">Profile</a>
                     </li>
                     <li class="nav-item">

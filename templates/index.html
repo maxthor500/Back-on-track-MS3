@@ -11,7 +11,7 @@
                         <!-- card content -->
                         <div class="d-flex">
                             <!-- profile's image -->
-                            <img src="{{ session['image_profile'] }}" class="profile-image" />
+                            <img src="{{ image }}" class="profile-image" />
                             <!-- empty card body to space image and button -->
                             <div class="card-body"></div>
                             <!-- button link to create_posts.html -->
@@ -23,11 +23,25 @@
             <section class="row justify-content-md-center mt-1rem">
                 <!-- get posts -->
                 {% for post in posts %}
-                    {{ post.post_name }} <br>
-                    {{ post.category_name}} <br>
-                    {{ post.post_description }} <br>
-                    {{ post.post_date }} <br>
-                    {{ post.created_by }} <br>
+                    <div class="card mb-2">
+                        <!-- card title -->
+                        <p class="m-1 text-center">{{ username }}</p>
+                        <!-- card content -->
+                        <div class="d-flex">
+                            <!-- profile's image -->
+                            <img src="{{ image }}" class="profile-image" />
+                            <!-- empty card body to space image and button -->
+                            <div class="card-body">
+                                <h6 class="card-subtitle text-muted">{{ post.category_name }}</h6>
+                                <p class="card-text">{{ post.post_description }}</p>
+                                <span class="card-subtitle text-muted">{{ post.created_by }} - {{ post.post_date }}</span>
+                            </div>
+                            <div class="col">
+                                <!-- button link to comments-->
+                                <a href="{{ url_for('add_posts') }}" class="btn target font-bungee btn-sm" data-toggle="button" aria-pressed="false">Comment &nbsp; <i class="far fa-comment"></i></a>
+                            </div>
+                        </div>
+                    </div>
                 {% endfor %}
             </section>
     {% else %}

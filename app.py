@@ -22,13 +22,15 @@ mongo = PyMongo(app)
 @app.route("/")
 @app.route('/index')
 def index():
-    return render_template('index.html', title='Home')
+    image = mongo.db.users.find_one({"username": session["username"]})['image_profile']
+    posts = get_posts()
+    return render_template('index.html', title='Home', image=image, posts=posts)
 
 #test function
 @app.route("/get_posts")
 def get_posts():
     posts = mongo.db.posts.find()
-    return render_template("posts.html", posts=posts)
+    return posts
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -77,7 +79,7 @@ def register():
             user = {
                     'email': request.form['email'],
                     'password': hash_pass,
-                    'username': request.form['username'].lower(),
+                    'username': request.form['username'],
                     'image_profile': '/static/images/anonymity.png',
                     'linkedin_url': '',
                     'website_url': '',
