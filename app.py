@@ -69,7 +69,7 @@ def register():
         # get all the users
         users = mongo.db.users
         # see if we already have the entered username
-        existing_user = users.find_one({'username': request.form['username']}).lower()
+        existing_user = users.find_one({'username': request.form['username']})
 
         if existing_user is None:
             # hash the entered password
