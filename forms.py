@@ -38,6 +38,6 @@ class CreatePostForm(FlaskForm):
     post_description = TextAreaField('Post Description',
                                      validators=[DataRequired()])
     post_date = DateTimeField("Enter Date", default=datetime.utcnow,
-                              format="%d/%m/%Y")
-    share_post = BooleanField(default="on")
+                              format="%d %b %Y %I:%M %p")
+    share_post = BooleanField()
     submit = SubmitField('Add Post')
