@@ -20,16 +20,24 @@ mongo = PyMongo(app)
 
 
 @app.route("/")
-@app.route('/index')
+@app.route('/home')
 def index():
-    image = mongo.db.users.find_one({"username": session["username"]})['image_profile']
+    #get posts
     posts = get_posts()
-    return render_template('index.html', title='Home', image=image, posts=posts)
+    #if logged get profile's image - to prevent key error
+    if session.get('logged_in'):
+        if session['logged_in'] is True:
+            image = mongo.db.users.find_one({"username": session["username"]})['image_profile']
+            return render_template('index.html', title='Home', 
+                                    image=image, posts=posts)    
+    #if not logged return template without user image 
+    return render_template('index.html', title='Home', posts=posts)
 
-#test function
+
+#function to return every posts with reserve order
 @app.route("/get_posts")
 def get_posts():
-    posts = mongo.db.posts.find()
+    posts = mongo.db.posts.find().sort("post_date", -1)
     return posts
 
 
@@ -98,13 +106,13 @@ def register():
 @app.route('/logout')
 def logout():
     """Clears session and redirects to home"""
-    flash("You have been logged out")
     session.clear()
     return redirect(url_for('index'))
 
 #render about page with map
 @app.route('/about')
 def about():
+    """Render About template to use LeafletJS"""
     return render_template('about.html', title='About')
 
 
@@ -150,8 +158,38 @@ def profile(username):
     image = mongo.db.users.find_one({"username": session["username"]})['image_profile']
     if session["username"]:
         return render_template("profile.html", username=username, image=image)
-
     return redirect(url_for("login"))
+
+
+@app.route('/edit_post/<post_id>', methods=['GET', 'POST'])
+def edit_post(post_id):
+    """Allows logged in user to edit their own posts"""
+    post_db = mongo.db.posts.find_one_or_404({'_id': ObjectId(post_id)})
+    print(post_db)
+    # get post
+    if request.method == 'GET':
+        form = CreatePostForm(data=post_db)
+        return render_template('edit_post.html', post=post_db, form=form)
+    # update post
+    form = CreatePostForm(request.form)
+    if request.method == "POST":
+        if form.validate_on_submit():
+            posts_db = mongo.db.recipes
+            posts_db.update_one({
+                '_id': ObjectId(post_id),
+            }, {
+                '$set': {
+                'post_title': request.form["post_title"],
+                    'created_by': session['username'],
+                    'post_description': request.form["post_description"],
+                    'share_post': request.form["share_post"],
+                    'category_name': request.form["category_name"],
+                    'post_date': request.form["post_date"]
+                }
+            })
+            return redirect(url_for('index', title='Post Edited'))
+    categories = mongo.db.categories.find().sort("category_name", 1)
+    return render_template('edit_post.html', post=post_db, form=form, categories=categories)
 
 
 if __name__ == "__main__":
