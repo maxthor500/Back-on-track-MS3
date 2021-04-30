@@ -3,13 +3,14 @@
 {% block content %}
     {% if session['username'] %}
             <!-- card share post  from Bootstrap -->
-            <section class="row justify-content-md-center mt-1rem">
+            <section class="row justify-content-md-center">
+                <h5 class="text-center font-bungee">Welcome {{ session['username'] }}</h5>
                 <div class="card">
                     <div class="mb-2">
                         <!-- card title -->
                         <p class="m-1 text-center">Share your resume</p>
                         <!-- card content -->
-                        <div class="d-flex">
+                        <div class="d-flex justify-content-end">
                             <!-- profile's image -->
                             <img src="{{ image }}" class="profile-image" />
                             <!-- empty card body to space image and button -->
@@ -20,37 +21,50 @@
                     </div>
                 </div>
             </section>
-            <section class="row justify-content-md-center mt-1rem">
-                <!-- get posts -->
-                {% for post in posts %}
-                    <div class="card mb-2">
+            <h5 class="text-center font-bungee mt-1rem">From the Community</h5>
+            <!-- get posts -->
+            {% for post in posts %}
+                {% if post.share_post == "on" %}
+                <section class="row justify-content-md-center mt-1rem">
+                    <div class="card">
                         <!-- card title -->
                         <p class="m-1 text-center">{{ username }}</p>
                         <!-- card content -->
                         <div class="d-flex">
                             <!-- profile's image -->
-                            <img src="{{ image }}" class="profile-image" />
-                            <!-- empty card body to space image and button -->
-                            <div class="card-body">
+                            <img src="{{ image }}" class="profile-image mr-1" />
+                            <!-- card body with post's info -->
+                            <div class="card-body p-0">
                                 <h6 class="card-subtitle text-muted">{{ post.category_name }}</h6>
-                                <p class="card-text">{{ post.post_description }}</p>
-                                <span class="card-subtitle text-muted">{{ post.created_by }} - {{ post.post_date }}</span>
-                            </div>
-                            <div class="col">
-                                <!-- button link to comments-->
-                                <a href="{{ url_for('add_posts') }}" class="btn target font-bungee btn-sm" data-toggle="button" aria-pressed="false">Comment &nbsp; <i class="far fa-comment"></i></a>
+                                <span class="card-text">{{ post.post_description }}</span> <br/>
+                                <span class="card-subtitle text-muted">{{ post.created_by.capitalize() }} - {{ post.post_date }}</span>
                             </div>
                         </div>
+                        {% if session['username'] == post.created_by %}
+                            <div class="mb-1 d-flex justify-content-between">
+                                  
+                                    <a href="{{ url_for('edit_post', post_id=post._id) }}" class="btn-post target font-bungee btn-sm" data-toggle="button" aria-pressed="false">Delete &nbsp; <i class="fas fa-trash-alt"></i></a>
+                                    
+                                    <a href="{{ url_for('edit_post', post_id=post._id) }}" class="btn-post target font-bungee btn-sm" data-toggle="button" aria-pressed="false">Edit &nbsp; <i class="fas fa-edit"></i></a>
+                            
+                                    <a href="{{ url_for('add_posts') }}" class="btn-post target font-bungee btn-sm" data-toggle="button" aria-pressed="false">Comment &nbsp; <i class="far fa-comment"></i></a>
+                        {% else %}
+                            <div class="mb-1 d-flex justify-content-end">
+                                <!-- button link to comments-->
+                                <a href="{{ url_for('add_posts') }}" class="btn-post target font-bungee btn-sm" data-toggle="button" aria-pressed="false">Comment &nbsp; <i class="far fa-comment"></i></a>
+                            </div>
+                        {% endif %}
                     </div>
-                {% endfor %}
-            </section>
+                </section>
+                {% endif %}
+            {% endfor %}
     {% else %}
             <!-- card container from Bootstrap -->
             <section class="row justify-content-md-center mt-1rem">
                 <figure class="col-sm-6 text-center">
                     <img src="{{ url_for('static', filename='images/BackOnTrackHero.svg') }}" class="img-thumbnail border-0" alt="Connect the World">
                 </figure>
-                <div class="card col-sm-6 border-0 justify-content-md-center mt-5">
+                <div class="card col-sm-6 border-0 justify-content-md-center mt-5 absolute">
                     <!-- login button -->
                     <div class="text-center">
                         <a href="{{ url_for('login') }}" class="btn target font-bungee btn2">Login &nbsp; <i class="fas fa-sign-in-alt"></i></a>

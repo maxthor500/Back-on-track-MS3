@@ -36,14 +36,19 @@ main {
 
 /* form card overlay to image with min width of the screen 576px */
 .card {
-    position: absolute;
     background-color: rgba(255, 255, 255, .1);
+}
+
+.absolute {
+    position: absolute;
 }
 
 @media screen and (min-width: 36em) {
     .card {
-        position: relative;
         max-width: 30rem;
+    }
+    .absolute {
+        position: relative;
     }
 }
 
@@ -121,7 +126,24 @@ main {
 .profile-image {
     height: 2rem;
     width: 2rem;
+    margin-right: 1rem;
 }
 
-
-
+/* get btn boostrap with some change to look smaller */
+.btn-post {
+    border: solid .1rem black;
+    background-color: #f46f9b;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #212529;
+    text-align: center;
+    text-decoration: none;
+    vertical-align: middle;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+    font-size: .7rem;
+    border-radius: .25rem;
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
