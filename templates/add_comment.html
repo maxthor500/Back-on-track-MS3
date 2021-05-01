@@ -2,13 +2,12 @@
 {% block nav_addpost %}active{% endblock %}
 {% block content %}
     <section class="row justify-content-md-center mt-1rem">
+        <h5 class="text-center font-bungee">Comment following Post</h5>
         <div class="card">
             <!-- card title -->
             <p class="m-1 text-center">{{ username }}</p>
             <!-- card content -->
             <div class="d-flex">
-                <!-- profile's image -->
-                <img src="{{ image }}" class="profile-image mr-1" />
                 <!-- card body with post's info -->
                 <div class="card-body p-0">
                     <h6 class="card-subtitle text-muted">{{ post.category_name }}</h6>
@@ -41,12 +40,37 @@
                     {{ form.comment.label(class="form-label") }}
                 </div>
                 <div class="mb-1 d-flex justify-content-end">
-                    {{ form.comment(size=80, class="form-control") }}
+                    <!-- add comment inpunt -->
+                    {{ form.comment(class="form-control", placeholder="Comment here") }}
+                    <!-- empty card body to space form and button -->
+                    <div class="card-body"></div>
+                    <!-- add comment button -->
                     {{ form.submit(class="btn-post target font-bungee btn-sm") }}
                 </div>
             </form>
         </div>
     </section>
-
-                    
+    {% for comment in comments %}
+        {% if comment.post_id == post._id %}
+            <section class="row justify-content-md-center mt-1rem">
+                <div class="card">
+                    <!-- card content -->
+                    <div class="d-flex">
+                        <!-- card body with post's info -->
+                        <div class="card-body p-0">
+                            <span class="card-text">{{ comment.comment_description }}</span> <br/>
+                            <span class="card-subtitle text-muted">{{ comment.created_by.capitalize() }} - {{ comment.comment_date }}</span>
+                            </div>
+                        </div>
+                        {% if session['username'] == comment.created_by %}
+                            <div class="mb-1 d-flex justify-content-between">
+                                <!-- button link to delete post-->
+                                <a href="{{ url_for('delete_comment', post_id=comment._id) }}" class="btn-post target font-bungee btn-sm" data-toggle="button" aria-pressed="false">Delete &nbsp; <i class="fas fa-trash-alt"></i></a>
+                        {% endif %}
+                    </div>
+                </div>
+            </section>
+        {% endif %}
+    {% endfor %}
+              
 {% endblock %}

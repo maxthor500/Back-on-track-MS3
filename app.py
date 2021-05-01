@@ -25,14 +25,7 @@ mongo = PyMongo(app)
 def index():
     """Render index template and when the user is logged every post is shown"""
     #get posts
-    posts = get_posts()
-    #if logged get profile's image - to prevent key error
-    if session.get('logged_in'):
-        if session['logged_in'] is True:
-            image = mongo.db.users.find_one({"username": session["username"]})['image_profile']
-            return render_template('index.html', title='Home', 
-                                    image=image, posts=posts)    
-    #if not logged return template without user image 
+    posts = get_posts() 
     return render_template('index.html', title='Home', posts=posts)
 
 
@@ -90,7 +83,6 @@ def register():
                     'email': request.form['email'],
                     'password': hash_pass,
                     'username': request.form['username'],
-                    'image_profile': '/static/images/anonymity.png',
                     'linkedin_url': '',
                     'website_url': '',
                     'share_profile': 'off'
@@ -168,9 +160,8 @@ def profile(username):
     """Render User profile if in session"""
     # grab the session user from db
     username = mongo.db.users.find_one({"username": session["username"]})['username']
-    image = mongo.db.users.find_one({"username": session["username"]})['image_profile']
     if session["username"]:
-        return render_template("profile.html", username=username, image=image)
+        return render_template("profile.html", username=username)
     return redirect(url_for("login"))
 
 
@@ -218,11 +209,12 @@ def add_comment(post_id):
     post_db = mongo.db.posts.find_one_or_404({'_id': ObjectId(post_id)})
     form = CreateCommentForm(request.form)
     comment_date = get_date()
+    comments = get_comments()
     if request.method == "POST":
         comment = {
-            'post_id': post_db,
+            'post_id': post_db['_id'],
             'created_by': session['username'],
-            'comment_description': request.form["post_description"],
+            'comment_description': request.form["comment"],
             'comment_date': comment_date
         }
         if form.validate_on_submit():
@@ -231,10 +223,25 @@ def add_comment(post_id):
             # insert the new post
             comments_db.insert_one(comment)
             flash("Comment Successfully Added")
-            return redirect(url_for('index', title='New Comment Added' , comment=comments_db))
+            return redirect(url_for('index', title='New Comment Added', comment=comments_db))
         else:
             flash("Something wrong! Comment not Added")
-    return render_template('add_comment.html', title='Comment', post=post_db, form=form)
+    return render_template('add_comment.html', title='Comment', post=post_db, form=form, comments=comments)
+
+
+@app.route("/get_comments")
+def get_comments():
+    """Return every comments"""
+    comments = mongo.db.comments.find().sort("post_date", 1)
+    return comments
+
+
+@app.route("/delete_comment/<post_id>")
+def delete_comment(post_id):
+    """Allows logged in user to delete one of their comments"""
+    mongo.db.comments.remove({"_id": ObjectId(post_id)})
+    flash("Comment Successfully Deleted")
+    return redirect(url_for("index"))
 
 
 if __name__ == "__main__":
