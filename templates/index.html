@@ -42,6 +42,8 @@
                         </div>
                         {% if session['username'] == post.created_by %}
                             <div class="mb-1 d-flex justify-content-between">
+                                    <!-- button link to delete post-->
+                                    <a href="{{ url_for('delete_post', post_id=post._id) }}" class="btn-post target font-bungee btn-sm" data-toggle="button" aria-pressed="false">Delete &nbsp; <i class="fas fa-trash-alt"></i></a>
                                     <!-- button link to edit post-->
                                     <a href="{{ url_for('edit_post', post_id=post._id) }}" class="btn-post target font-bungee btn-sm" data-toggle="button" aria-pressed="false">Edit &nbsp; <i class="fas fa-edit"></i></a>
                                     <!-- button link to comment post-->
