@@ -5,7 +5,7 @@ from flask import (
     redirect, request, session, url_for)
 from flask_pymongo import PyMongo, DESCENDING
 from bson.objectid import ObjectId
-from forms import RegisterForm, LoginForm, CreatePostForm
+from forms import RegisterForm, LoginForm, CreatePostForm, CreateCommentForm
 import bcrypt
 if os.path.exists("env.py"):
     import env
@@ -212,7 +212,31 @@ def delete_post(post_id):
     flash("Post Successfully Deleted")
     return redirect(url_for("index"))
 
-    
+
+@app.route("/add_comment/<post_id>", methods=['GET', 'POST'])
+def add_comment(post_id):
+    post_db = mongo.db.posts.find_one_or_404({'_id': ObjectId(post_id)})
+    form = CreateCommentForm(request.form)
+    comment_date = get_date()
+    if request.method == "POST":
+        comment = {
+            'post_id': post_db,
+            'created_by': session['username'],
+            'comment_description': request.form["post_description"],
+            'comment_date': comment_date
+        }
+        if form.validate_on_submit():
+            # set the collection
+            comments_db = mongo.db.comments
+            # insert the new post
+            comments_db.insert_one(comment)
+            flash("Comment Successfully Added")
+            return redirect(url_for('index', title='New Comment Added' , comment=comments_db))
+        else:
+            flash("Something wrong! Comment not Added")
+    return render_template('add_comment.html', title='Comment', post=post_db, form=form)
+
+
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),
             port=int(os.environ.get("PORT")),

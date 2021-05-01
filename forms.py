@@ -39,3 +39,8 @@ class CreatePostForm(FlaskForm):
                                      validators=[DataRequired()])
     share_post = BooleanField()
     submit = SubmitField('Add Post')
+
+
+class CreateCommentForm(FlaskForm):
+    comment = StringField('Write a comment',validators=[DataRequired()])
+    submit = SubmitField('Add Comment')
