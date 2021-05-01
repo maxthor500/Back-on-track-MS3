@@ -11,10 +11,6 @@
                         <p class="m-1 text-center">Share your resume</p>
                         <!-- card content -->
                         <div class="d-flex justify-content-end">
-                            <!-- profile's image -->
-                            <img src="{{ image }}" class="profile-image" />
-                            <!-- empty card body to space image and button -->
-                            <div class="card-body"></div>
                             <!-- button link to create_posts.html -->
                             <a href="{{ url_for('add_posts') }}" class="btn target font-bungee btn-sm" data-toggle="button" aria-pressed="false">Share Post &nbsp; <i class="fas fa-share-square"></i></a>
                         </div>
@@ -25,37 +21,33 @@
             <!-- get posts -->
             {% for post in posts %}
                 {% if post.share_post == "on" %}
-                <section class="row justify-content-md-center mt-1rem">
-                    <div class="card">
-                        <!-- card title -->
-                        <p class="m-1 text-center">{{ username }}</p>
-                        <!-- card content -->
-                        <div class="d-flex">
-                            <!-- profile's image -->
-                            <img src="{{ image }}" class="profile-image mr-1" />
-                            <!-- card body with post's info -->
-                            <div class="card-body p-0">
-                                <h6 class="card-subtitle text-muted">{{ post.category_name }}</h6>
-                                <span class="card-text">{{ post.post_description }}</span> <br/>
-                                <span class="card-subtitle text-muted">{{ post.created_by.capitalize() }} - {{ post.post_date }}</span>
+                    <section class="row justify-content-md-center mt-1rem">
+                        <div class="card">
+                            <!-- card content -->
+                            <div class="d-flex">
+                                <!-- card body with post's info -->
+                                <div class="card-body p-0 mt-1rem">
+                                    <h6 class="card-subtitle text-muted">{{ post.category_name }}</h6>
+                                    <span class="card-text">{{ post.post_description }}</span> <br/>
+                                    <span class="card-subtitle text-muted">{{ post.created_by.capitalize() }} - {{ post.post_date }}</span>
+                                </div>
                             </div>
-                        </div>
-                        {% if session['username'] == post.created_by %}
-                            <div class="mb-1 d-flex justify-content-between">
-                                    <!-- button link to delete post-->
-                                    <a href="{{ url_for('delete_post', post_id=post._id) }}" class="btn-post target font-bungee btn-sm" data-toggle="button" aria-pressed="false">Delete &nbsp; <i class="fas fa-trash-alt"></i></a>
-                                    <!-- button link to edit post-->
-                                    <a href="{{ url_for('edit_post', post_id=post._id) }}" class="btn-post target font-bungee btn-sm" data-toggle="button" aria-pressed="false">Edit &nbsp; <i class="fas fa-edit"></i></a>
-                                    <!-- button link to comment post-->
+                            {% if session['username'] == post.created_by %}
+                                <div class="mb-1 d-flex justify-content-between">
+                                        <!-- button link to delete post-->
+                                        <a href="{{ url_for('delete_post', post_id=post._id) }}" class="btn-post target font-bungee btn-sm" data-toggle="button" aria-pressed="false">Delete &nbsp; <i class="fas fa-trash-alt"></i></a>
+                                        <!-- button link to edit post-->
+                                        <a href="{{ url_for('edit_post', post_id=post._id) }}" class="btn-post target font-bungee btn-sm" data-toggle="button" aria-pressed="false">Edit &nbsp; <i class="fas fa-edit"></i></a>
+                                        <!-- button link to comment post-->
+                                        <a href="{{ url_for('add_comment', post_id=post._id) }}" class="btn-post target font-bungee btn-sm" data-toggle="button" aria-pressed="false">Comment &nbsp; <i class="far fa-comment"></i></a>
+                            {% else %}
+                                <div class="mb-1 d-flex justify-content-end">
+                                    <!-- button link to comments -->
                                     <a href="{{ url_for('add_comment', post_id=post._id) }}" class="btn-post target font-bungee btn-sm" data-toggle="button" aria-pressed="false">Comment &nbsp; <i class="far fa-comment"></i></a>
-                        {% else %}
-                            <div class="mb-1 d-flex justify-content-end">
-                                <!-- button link to comments -->
-                                <a href="{{ url_for('add_comment', post_id=post._id) }}" class="btn-post target font-bungee btn-sm" data-toggle="button" aria-pressed="false">Comment &nbsp; <i class="far fa-comment"></i></a>
-                            </div>
-                        {% endif %}
-                    </div>
-                </section>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </section>
                 {% endif %}
             {% endfor %}
     {% else %}

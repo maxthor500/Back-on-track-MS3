@@ -122,13 +122,6 @@ main {
     margin-top: 2rem;
 }
 
-/* profile image */
-.profile-image {
-    height: 2rem;
-    width: 2rem;
-    margin-right: 1rem;
-}
-
 /* get btn boostrap with some change to look smaller */
 .btn-post {
     border: solid .1rem black;
