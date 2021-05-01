@@ -1,8 +1,9 @@
 import os
+from datetime import datetime
 from flask import (
     Flask, flash, render_template,
     redirect, request, session, url_for)
-from flask_pymongo import PyMongo
+from flask_pymongo import PyMongo, DESCENDING
 from bson.objectid import ObjectId
 from forms import RegisterForm, LoginForm, CreatePostForm
 import bcrypt
@@ -22,6 +23,7 @@ mongo = PyMongo(app)
 @app.route("/")
 @app.route('/home')
 def index():
+    """Render index template and when the user is logged every post is shown"""
     #get posts
     posts = get_posts()
     #if logged get profile's image - to prevent key error
@@ -34,9 +36,9 @@ def index():
     return render_template('index.html', title='Home', posts=posts)
 
 
-#function to return every posts with reserve order
 @app.route("/get_posts")
 def get_posts():
+    """Return every posts with reserve order"""
     posts = mongo.db.posts.find().sort("post_date", -1)
     return posts
 
@@ -109,7 +111,7 @@ def logout():
     session.clear()
     return redirect(url_for('index'))
 
-#render about page with map
+
 @app.route('/about')
 def about():
     """Render About template to use LeafletJS"""
@@ -126,6 +128,7 @@ def contact():
 def add_posts():
     """Creates a posts and enters into my collection"""
     form = CreatePostForm(request.form)
+    post_date = get_date()
     if request.method == "POST":
         share_post = "on" if request.form.get("share_post") else "off"
         post = {
@@ -134,7 +137,7 @@ def add_posts():
             'post_description': request.form["post_description"],
             'share_post': share_post,
             'category_name': request.form["category_name"],
-            'post_date': request.form["post_date"]
+            'post_date': post_date
         }
         if form.validate_on_submit():
             # set the collection
@@ -151,8 +154,18 @@ def add_posts():
                            categories=categories)
 
 
+@app.route('/get_date')
+def get_date():
+    """get now date with a specific format"""
+    now = datetime.now()
+    format = "%Y %b %d %I:%M %p"
+    post_date = now.strftime(format)
+    return post_date
+
+
 @app.route("/profile/<username>", methods=["GET", "POST"])
 def profile(username):
+    """Render User profile if in session"""
     # grab the session user from db
     username = mongo.db.users.find_one({"username": session["username"]})['username']
     image = mongo.db.users.find_one({"username": session["username"]})['image_profile']
@@ -165,29 +178,29 @@ def profile(username):
 def edit_post(post_id):
     """Allows logged in user to edit their own posts"""
     post_db = mongo.db.posts.find_one_or_404({'_id': ObjectId(post_id)})
-    print(post_db)
+    post_date = get_date()
     # get post
     if request.method == 'GET':
         form = CreatePostForm(data=post_db)
         return render_template('edit_post.html', post=post_db, form=form)
     # update post
     form = CreatePostForm(request.form)
-    if request.method == "POST":
-        if form.validate_on_submit():
-            posts_db = mongo.db.recipes
-            posts_db.update_one({
-                '_id': ObjectId(post_id),
-            }, {
-                '$set': {
+    if form.validate_on_submit():
+        share_post = "on" if request.form.get("share_post") else "off"
+        posts_db = mongo.db.posts
+        posts_db.update_one({
+            '_id': ObjectId(post_id),
+        }, {
+            '$set': {
                 'post_title': request.form["post_title"],
-                    'created_by': session['username'],
-                    'post_description': request.form["post_description"],
-                    'share_post': request.form["share_post"],
-                    'category_name': request.form["category_name"],
-                    'post_date': request.form["post_date"]
-                }
-            })
-            return redirect(url_for('index', title='Post Edited'))
+                'created_by': session['username'],
+                'post_description': request.form["post_description"],
+                'share_post': share_post,
+                'category_name': request.form["category_name"],
+                'post_date': post_date
+            }
+        })
+        return redirect(url_for('index', title='Post Edited'))
     categories = mongo.db.categories.find().sort("category_name", 1)
     return render_template('edit_post.html', post=post_db, form=form, categories=categories)
 

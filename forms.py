@@ -37,7 +37,5 @@ class CreatePostForm(FlaskForm):
     category_name = SelectField("Category", validators=[DataRequired()], validate_choice=False)
     post_description = TextAreaField('Post Description',
                                      validators=[DataRequired()])
-    post_date = DateTimeField("Enter Date", default=datetime.utcnow,
-                              format="%d %b %Y %I:%M %p")
     share_post = BooleanField()
     submit = SubmitField('Add Post')
