@@ -25,8 +25,9 @@ mongo = PyMongo(app)
 def index():
     """Render index template and when the user is logged every post is shown"""
     #get posts
-    posts = get_posts() 
-    return render_template('index.html', title='Home', posts=posts)
+    posts = get_posts()
+    last_posts = posts.limit(3)
+    return render_template('index.html', title='Home', posts=posts, last_posts=last_posts)
 
 
 @app.route("/get_posts")

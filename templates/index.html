@@ -80,5 +80,25 @@
                     </p>
                 </div>
             </section>
+            <!-- last three comment container -->
+            <section class="row justify-content-md-center mt-1rem">
+                <h4 class="font-bungee text-center">What People are posting about.</h4>
+                <!-- get  last three posts -->
+                {% for post in last_posts %}
+                    {% if post.share_post == "on" %}
+                            <div class="card justify-content-center mt-1rem">
+                                <!-- card content -->
+                                <div class="d-flex">
+                                    <!-- card body with post's info -->
+                                    <div class="card-body p-0 mt-1rem">
+                                        <h6 class="card-subtitle text-muted">{{ post.category_name }}</h6>
+                                        <span class="card-text">{{ post.post_description }}</span> <br/>
+                                        <span class="card-subtitle text-muted">{{ post.created_by.capitalize() }} - {{ post.post_date }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                    {% endif %}
+                {% endfor %}
+            </section>
     {% endif %}
 {% endblock %}
