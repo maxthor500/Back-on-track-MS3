@@ -3,6 +3,31 @@
 {% block content %}
     <section class="row justify-content-md-center mt-1rem">
         <h4 class="font-bungee text-center">{{ username }}'s profile</h4>
-    </section>   
+    </section>
+    <section class="row justify-content-md-center mt-1rem">
+        <div class="card">
+            <div class="mb-2">
+                <!-- card title -->
+                <h6 class="card-subtitle font-bungee text-center mt-1">profile</h6>
+                <!-- card content -->
+                <div class="d-flex">
+                    <figure class="mt-1rem">
+                        <!-- image (in future need to be changed with profile's image) -->
+                        <img src="{{ url_for('static', filename="images/anonymity.png") }}" alt="profile image" class="profile-image"/>
+                    </figure>
+                    <!-- get data to user collection -->
+                    <div class="card-body p-1 ml-1rem">
+                        <span>Email <i class="fas fa-envelope text-color"></i>: {{ user.email }}</span><br/>
+                        <span>Linked<i class="fab fa-linkedin text-color"></i>: {{ user.linkedin_url }}</span><br/> 
+                        <span>site<i class="fas fa-globe-europe text-color"></i>: {{ user.website_url }}</span> 
+                    </div>
+                </div>
+                <div class="mb-1 d-flex justify-content-end">
+                    <!-- button link to update_profile.html -->
+                    <a href="{{ url_for('update_profile', username=session['username']) }}" class="btn target font-bungee btn-sm" data-toggle="button" aria-pressed="false">Update Profile &nbsp; <i class="fas fa-user-edit"></i></a>
+                </div>
+            </div>         
+        </div>
+    </section>
 
 {% endblock %}

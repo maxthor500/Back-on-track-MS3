@@ -1,6 +1,22 @@
 {% extends "base.html" %}
 {% block nav_addpost %}active{% endblock %}
 {% block content %}
+    <!-- error message section -->
+    <section class="row text-center">
+            {% for error in form.category_name.errors %}
+                <span class="msg-error">{{ error }}</span><br>
+            {% endfor %}
+            {% for error in form.post_title.errors %}
+                <span class="msg-error">{{ error }}</span><br>
+            {% endfor %}
+            {% for error in form.post_description.errors %}
+                <span class="msg-error">{{ error }}</span>br
+            {% endfor %}
+            {% for error in form.share_post.errors %}
+                <span class="msg-error">{{ error }}</span><br>
+            {% endfor %}
+    </section>    
+    <!-- form section -->
     <section class="row justify-content-md-center mt-1rem">
         <div class="card">
             <h5 class="font-bungee text-center mt-1rem">Edit Post</h5>

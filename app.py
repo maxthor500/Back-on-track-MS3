@@ -5,7 +5,9 @@ from flask import (
     redirect, request, session, url_for)
 from flask_pymongo import PyMongo, DESCENDING
 from bson.objectid import ObjectId
-from forms import RegisterForm, LoginForm, CreatePostForm, CreateCommentForm
+from forms import (
+    RegisterForm, LoginForm, CreatePostForm, 
+    CreateCommentForm, UpdateProfileForm)
 import bcrypt
 if os.path.exists("env.py"):
     import env
@@ -19,15 +21,14 @@ app.secret_key = os.environ.get("SECRET_KEY")
 
 mongo = PyMongo(app)
 
-
+#index section
 @app.route("/")
 @app.route('/home')
 def index():
     """Render index template and when the user is logged every post is shown"""
     #get posts
     posts = get_posts()
-    last_posts = posts.limit(3)
-    return render_template('index.html', title='Home', posts=posts, last_posts=last_posts)
+    return render_template('index.html', title='Home', posts=posts)
 
 
 @app.route("/get_posts")
@@ -37,6 +38,7 @@ def get_posts():
     return posts
 
 
+#register user section
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     """Login handler"""
@@ -50,7 +52,7 @@ def login():
         # get all users
         users = mongo.db.users
         # try and get one with same name as entered
-        db_user = users.find_one({'username': request.form['username']})
+        db_user = users.find_one({'username': request.form['username'].lower()})
         
         if db_user:
             # check password using hashing
@@ -85,8 +87,7 @@ def register():
                     'password': hash_pass,
                     'username': request.form['username'],
                     'linkedin_url': '',
-                    'website_url': '',
-                    'share_profile': 'off'
+                    'website_url': ''
                     }
             # insert the user to DB
             users.insert_one(user)
@@ -105,18 +106,74 @@ def logout():
     return redirect(url_for('index'))
 
 
+@app.route('/get_date')
+def get_date():
+    """get now date with a specific format"""
+    now = datetime.now()
+    format = "%Y %b %d %I:%M %p"
+    post_date = now.strftime(format)
+    return post_date
+
+
+#about
 @app.route('/about')
 def about():
     """Render About template to use LeafletJS"""
     return render_template('about.html', title='About')
 
-
+#contact
 @app.route('/contact')
 def contact():
     """Render Contact template to use EmailJS"""
     return render_template('contact.html', title='Contact')
 
+#profile section
+@app.route("/profile/<username>", methods=["GET", "POST"])
+def profile(username):
+    """Render User profile if in session"""
+    user = get_user(username)
+    # grab the session user from db
+    username = mongo.db.users.find_one({"username": session["username"]})['username']
+    if session["username"]:
+        return render_template("profile.html", title="My Profile", username=username, user=user)
+    return redirect(url_for("login", title="Home"))
 
+
+@app.route('/update_profile/<username>', methods=['GET', 'POST'])
+def update_profile(username):
+    """Allows logged in user to update their own profile"""
+    user = get_user(username)
+    user_id = mongo.db.users.find_one({"username": session["username"]})['_id']
+    username = mongo.db.users.find_one({"username": session["username"]})['username']
+    # get user
+    if request.method == 'GET':
+        form = UpdateProfileForm(data=user)
+        return render_template('update_profile.html', title="Update Profile", user=user, username=username, form=form)
+    form = UpdateProfileForm(request.form)
+    if form.validate_on_submit():
+        users_db = mongo.db.users
+        users_db.update_one({
+            '_id': ObjectId(user_id),
+        }, {
+            '$set': {
+                'email': request.form["email"],
+                'linkedin_url': request.form["linkedin_url"],
+                'website_url': request.form["website_url"]
+            }
+        })
+        flash("Profile Successfully Updated")
+        return redirect(url_for('profile', title="Profile Updated", user=user, username=username, form=form))
+    return render_template('update_profile.html', title="Update Profile", user=user, username=username, form=form)
+
+
+@app.route('/get_user/<username>', methods=['GET', 'POST'])
+def get_user(username):
+    user_id = mongo.db.users.find_one({"username": session["username"]})['_id']
+    user_db = mongo.db.users.find_one_or_404({'_id': ObjectId(user_id)})
+    return user_db
+
+
+#posts section
 @app.route('/add_posts', methods=['GET', 'POST'])
 def add_posts():
     """Creates a posts and enters into my collection"""
@@ -147,25 +204,6 @@ def add_posts():
                            categories=categories)
 
 
-@app.route('/get_date')
-def get_date():
-    """get now date with a specific format"""
-    now = datetime.now()
-    format = "%Y %b %d %I:%M %p"
-    post_date = now.strftime(format)
-    return post_date
-
-
-@app.route("/profile/<username>", methods=["GET", "POST"])
-def profile(username):
-    """Render User profile if in session"""
-    # grab the session user from db
-    username = mongo.db.users.find_one({"username": session["username"]})['username']
-    if session["username"]:
-        return render_template("profile.html", username=username)
-    return redirect(url_for("login"))
-
-
 @app.route('/edit_post/<post_id>', methods=['GET', 'POST'])
 def edit_post(post_id):
     """Allows logged in user to edit their own posts"""
@@ -192,6 +230,7 @@ def edit_post(post_id):
                 'post_date': post_date
             }
         })
+        flash("Post Successfully Edited")
         return redirect(url_for('index', title='Post Edited'))
     categories = mongo.db.categories.find().sort("category_name", 1)
     return render_template('edit_post.html', post=post_db, form=form, categories=categories)
@@ -204,7 +243,7 @@ def delete_post(post_id):
     flash("Post Successfully Deleted")
     return redirect(url_for("index"))
 
-
+#comments section
 @app.route("/add_comment/<post_id>", methods=['GET', 'POST'])
 def add_comment(post_id):
     post_db = mongo.db.posts.find_one_or_404({'_id': ObjectId(post_id)})

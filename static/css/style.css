@@ -140,3 +140,20 @@ main {
     border-radius: .25rem;
     transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }
+
+/* margin left for profile container */
+.ml-1rem {
+    margin-left: 1rem;
+}
+
+/* profile image */
+.profile-image {
+    width: 2rem;
+    height: 2rem;
+    vertical-align: middle;
+}
+
+/* linkedin icon */
+.text-color {
+    color: #00aac7;
+}

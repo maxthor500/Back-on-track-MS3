@@ -11,6 +11,10 @@
                         <p class="m-1 text-center">Share your resume</p>
                         <!-- card content -->
                         <div class="d-flex justify-content-end">
+                            <!-- image (in future need to be changed with profile's image) -->
+                            <img src="{{ url_for('static', filename="images/anonymity.png") }}" alt="profile image" class="profile-image"/>
+                            <!-- div to add space between the image and the button -->
+                            <div class="card-body"></div>
                             <!-- button link to create_posts.html -->
                             <a href="{{ url_for('add_posts') }}" class="btn target font-bungee btn-sm" data-toggle="button" aria-pressed="false">Share Post &nbsp; <i class="fas fa-share-square"></i></a>
                         </div>
@@ -84,9 +88,9 @@
             <section class="row justify-content-md-center mt-1rem">
                 <h4 class="font-bungee text-center">What People are posting about.</h4>
                 <!-- get  last three posts -->
-                {% for post in last_posts %}
+                {% for post in posts[:3] %}
                     {% if post.share_post == "on" %}
-                            <div class="card justify-content-center mt-1rem">
+                            <div class="card mt-1rem m-2">
                                 <!-- card content -->
                                 <div class="d-flex">
                                     <!-- card body with post's info -->

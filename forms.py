@@ -44,3 +44,14 @@ class CreatePostForm(FlaskForm):
 class CreateCommentForm(FlaskForm):
     comment = StringField('Write a comment',validators=[DataRequired()])
     submit = SubmitField('Add Comment')
+
+
+class UpdateProfileForm(FlaskForm):
+    email = StringField('Email Address', validators=[DataRequired(),
+                                                     Length(min=6, max=35),
+                                                     Email()])
+    linkedin_url = StringField('Your LinkedIn (full path)', validators=[DataRequired()])
+    website_url = StringField('Your Website (full path)', validators=[DataRequired()])
+    submit = SubmitField('Update Profile')
+
+   
