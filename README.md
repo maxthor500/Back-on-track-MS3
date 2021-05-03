@@ -1,10 +1,10 @@
-# <img src=".\static\images\LogoBOT.svg" alt="BOT logo" style="zoom:12%;" /> Back On Track
+# <img src=".\static\images\LogoBOT.svg" alt="BOT logo" style="zoom:5%;" /> Back On Track
 
 **Code Institute - Milestone Project 3**
 
 [View webpage in GitHub Pages](https://github.com/maxthor500/Back-on-track-MS3)
 
-![Multi Device Website Mockup](.\assets\wireframes\multi_device_BOT.png)
+![Multi Device Website Mockup](./assets/wireframes/multi_device_BOT.png)
 
 This project is the third Milestone Project that make up the Full Stack Developer course at the Code Institute.
 

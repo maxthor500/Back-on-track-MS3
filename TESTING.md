@@ -24,24 +24,24 @@ Main [README.md](README.md)
 
 the main issue I got from link tag, there are errors of the type as in the following PDF files
 
--  [html_validator.pdf](assets\tests\html_validator.pdf) 
--  [login_validator.pdf](assets\tests\login_validator.pdf) 
--  [profile_validator.pdf](assets\tests\profile_validator.pdf) 
+-  [html_validator.pdf](./assets/tests/html_validator.pdf) 
+-  [login_validator.pdf](./assets/tests/login_validator.pdf) 
+-  [profile_validator.pdf](./assets/tests/profile_validator.pdf) 
 
 **CSS**
 
--  [CSS_validator.pdf](assets\tests\CSS_validator.pdf) 
+-  [CSS_validator.pdf](./assets/tests/CSS_validator.pdf) 
 
 **JavaScript**
 
--   [JSHint_script.pdf](assets\tests\JSHint_script.pdf) 
--  [JSHint_map.pdf](assets\tests\JSHint_map.pdf) 
--  [JSHint_emailJS.pdf](assets\tests\JSHint_emailJS.pdf) 
+-   [JSHint_script.pdf](./assets/tests/JSHint_script.pdf) 
+-  [JSHint_map.pdf](./assets/tests/JSHint_map.pdf) 
+-  [JSHint_emailJS.pdf](./assets/tests/JSHint_emailJS.pdf) 
 
 **P8P**
 
--  [app.py result in txt](assets\tests\result_appP8P)
-- [forms.py result in txt](assets\tests\result_formsP8P)
+-  [app.py result in txt](./assets/tests/result_appP8P)
+- [forms.py result in txt](./assets/tests/result_formsP8P)
 
 **User Stories testing:**
 
@@ -59,9 +59,7 @@ the main issue I got from link tag, there are errors of the type as in the follo
 
 - As a new user I am looking for some help from another people to organize my curriculum vitae 
 
-  
-
-  <img src="C:\Users\fox_i\Desktop\Back On Track\Back-on-track-MS3\assets\readme_images\post_commented.jpg" alt="post_commented" style="zoom:30%;" />
+  <img src=".\assets\readme_images\post_commented.jpg" alt="post_commented" style="zoom:30%;" />
 
 - As a new user I can see examples of posts have been putted on site. 
 
@@ -165,5 +163,5 @@ the main issue I got from link tag, there are errors of the type as in the follo
 
 **Lighthouse**
 
- [Lighthouse_summary.pdf](assets\tests\Lighthouse_summary.pdf) 
+ [Lighthouse_summary.pdf](./assets/tests/Lighthouse_summary.pdf) 
 
