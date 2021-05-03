@@ -7,7 +7,7 @@ from flask_pymongo import PyMongo, DESCENDING
 from bson.objectid import ObjectId
 from forms import (
     RegisterForm, LoginForm, CreatePostForm, 
-    CreateCommentForm, UpdateProfileForm)
+    CreateCommentForm, UpdateProfileForm, ConfirmDeleteAccount)
 import bcrypt
 if os.path.exists("env.py"):
     import env
@@ -132,10 +132,11 @@ def contact():
 def profile(username):
     """Render User profile if in session"""
     user = get_user(username)
+    posts = get_posts()
     # grab the session user from db
     username = mongo.db.users.find_one({"username": session["username"]})['username']
     if session["username"]:
-        return render_template("profile.html", title="My Profile", username=username, user=user)
+        return render_template("profile.html", title="My Profile", username=username, user=user, posts=posts)
     return redirect(url_for("login", title="Home"))
 
 
@@ -143,6 +144,7 @@ def profile(username):
 def update_profile(username):
     """Allows logged in user to update their own profile"""
     user = get_user(username)
+    posts = get_posts()
     user_id = mongo.db.users.find_one({"username": session["username"]})['_id']
     username = mongo.db.users.find_one({"username": session["username"]})['username']
     # get user
@@ -162,13 +164,51 @@ def update_profile(username):
             }
         })
         flash("Profile Successfully Updated")
-        return redirect(url_for('profile', title="Profile Updated", user=user, username=username, form=form))
+        return redirect(url_for('profile', title="Profile Updated", user=user, posts=posts, username=username, form=form))
     return render_template('update_profile.html', title="Update Profile", user=user, username=username, form=form)
+
+
+@app.route("/delete_account/<username>", methods=['GET', 'POST'])
+def delete_account(username):
+    '''
+    DELETE.
+    Remove user's account from the database as well as all
+    posts and comments created by this user.
+    Before deletion of the account, user is asked
+    to confirm it by entering password.
+    '''
+    delete_form = ConfirmDeleteAccount(request.form)
+    # get all users
+    users = mongo.db.users
+    # try and get one with same name as entered
+    db_user = users.find_one({'username': username})
+    
+    if delete_form.validate_on_submit():
+        if db_user:
+            # check password using hashing
+            if bcrypt.hashpw(request.form['password'].encode('utf-8'),
+                                db_user['password']) == db_user['password']:
+                db_post = mongo.db.posts.find({'created_by': username})
+                db_comment = mongo.db.comments.find({'created_by': username})
+                for post in list(db_post):
+                    mongo.db.posts.remove({"created_by": username})
+                for comment in list(db_comment):
+                    mongo.db.comments.remove({"created_by": username})
+                mongo.db.users.remove({"_id": ObjectId(db_user["_id"])})
+                logout()
+                flash("Account Successfully Deleted")
+                # successful redirect to home logged in
+                return redirect(url_for('index', title="Home"))
+            else:
+                # must have failed set flash message
+                flash("Password is incorrect! Please try again")
+    return render_template("delete_account.html", username=username, form=delete_form)
+        
 
 
 @app.route('/get_user/<username>', methods=['GET', 'POST'])
 def get_user(username):
-    user_id = mongo.db.users.find_one({"username": session["username"]})['_id']
+    user_id = mongo.db.users.find_one_or_404({"username": session["username"]})['_id']
     user_db = mongo.db.users.find_one_or_404({'_id': ObjectId(user_id)})
     return user_db
 

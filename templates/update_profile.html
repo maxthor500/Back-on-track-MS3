@@ -1,5 +1,17 @@
 {% extends "base.html" %}
 {% block content %}
+    <!-- error message section (username incorrect and password not match)-->
+    <section class="row text-center">
+            {% for error in form.email.errors %}
+                <span class="msg-error">{{ error }}</span><br>
+            {% endfor %}
+            {% for error in form.linkedin_url.errors %}
+                <span class="msg-error">{{ error }}</span><br>
+            {% endfor %}
+            {% for error in form.website_url.errors %}
+                <span class="msg-error">{{ error }}</span><br>
+            {% endfor %}
+        </section>
     <section class="row justify-content-md-center mt-1rem">
         <div class="card">
             <h5 class="font-bungee text-center mt-1rem">Update Profile</h5>
@@ -8,18 +20,18 @@
                 {{ form.csrf_token }}
                 <!-- email -->
                 <div class="mb-3">
-                    {{ form.email.label }}
-                    {{ form.email }}
+                    {{ form.email.label(class="form-label") }}
+                    {{ form.email(class="form-control") }}
                 </div>
                 <!-- linkedin url -->
                 <div class="mb-3">
-                    {{ form.linkedin_url.label }}
-                    {{ form.linkedin_url }}
+                    {{ form.linkedin_url.label(class="form-label") }}
+                    {{ form.linkedin_url(class="form-control") }}
                 </div>
                 <!-- website url -->
                 <div class="mb-3">
-                    {{ form.website_url.label }}
-                    {{ form.website_url }}
+                    {{ form.website_url.label(class="form-label") }}
+                    {{ form.website_url(class="form-control") }}
                 </div>
                 <!-- submit form -->
                 <div class="text-center mb-3">

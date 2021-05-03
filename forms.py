@@ -54,4 +54,7 @@ class UpdateProfileForm(FlaskForm):
     website_url = StringField('Your Website (full path)', validators=[DataRequired()])
     submit = SubmitField('Update Profile')
 
+class ConfirmDeleteAccount(FlaskForm):
+    password = PasswordField('Insert Password to Confirm', validators=[DataRequired()])
+    submit = SubmitField('Delete Account')
    
