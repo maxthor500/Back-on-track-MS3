@@ -191,12 +191,14 @@ def delete_account(username):
                 db_post = mongo.db.posts.find({'created_by': username})
                 db_comment = mongo.db.comments.find({'created_by': username})
                 for post in list(db_post):
-                    print(post + "has been Deleted")
-                    mongo.db.posts.remove({"created_by": username})
-                for comment in list(db_comment):
-                    print(comment + "has been Deleted")
-                    mongo.db.comments.remove({"created_by": username})
-                mongo.db.users.remove({"_id": ObjectId(db_user["_id"])})
+                    post_id = post["_id"]
+                    for comment in list(db_comment):
+                        comment_id = comment["post_id"]
+                        if comment_id == ObjectId(post_id):
+                            mongo.db.comments.delete_one({"post_id": comment_id})
+                        mongo.db.comments.delete_many({"created_by": username})
+                        mongo.db.posts.delete_one({"_id": ObjectId(post_id)})
+                mongo.db.users.delete_one({"_id": ObjectId(db_user["_id"])})
                 logout()
                 flash("Account Successfully Deleted")
                 # successful redirect to home logged in
