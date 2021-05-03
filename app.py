@@ -323,6 +323,11 @@ def delete_comment(post_id):
     flash("Comment Successfully Deleted")
     return redirect(url_for("index"))
 
+#error handle
+@app.errorhandler(404)
+def handle_404(exception):
+    return render_template('404.html', exception=exception)
+
 
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),
