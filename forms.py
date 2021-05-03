@@ -57,4 +57,3 @@ class UpdateProfileForm(FlaskForm):
 class ConfirmDeleteAccount(FlaskForm):
     password = PasswordField('Insert Password to Confirm', validators=[DataRequired()])
     submit = SubmitField('Delete Account')
-   

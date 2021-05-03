@@ -191,8 +191,10 @@ def delete_account(username):
                 db_post = mongo.db.posts.find({'created_by': username})
                 db_comment = mongo.db.comments.find({'created_by': username})
                 for post in list(db_post):
+                    print(post + "has been Deleted")
                     mongo.db.posts.remove({"created_by": username})
                 for comment in list(db_comment):
+                    print(comment + "has been Deleted")
                     mongo.db.comments.remove({"created_by": username})
                 mongo.db.users.remove({"_id": ObjectId(db_user["_id"])})
                 logout()
@@ -204,7 +206,6 @@ def delete_account(username):
                 flash("Password is incorrect! Please try again")
     return render_template("delete_account.html", username=username, form=delete_form)
         
-
 
 @app.route('/get_user/<username>', methods=['GET', 'POST'])
 def get_user(username):
@@ -283,6 +284,7 @@ def delete_post(post_id):
     flash("Post Successfully Deleted")
     return redirect(url_for("index"))
 
+
 #comments section
 @app.route("/add_comment/<post_id>", methods=['GET', 'POST'])
 def add_comment(post_id):
@@ -322,6 +324,7 @@ def delete_comment(post_id):
     mongo.db.comments.remove({"_id": ObjectId(post_id)})
     flash("Comment Successfully Deleted")
     return redirect(url_for("index"))
+
 
 #error handle
 @app.errorhandler(404)
