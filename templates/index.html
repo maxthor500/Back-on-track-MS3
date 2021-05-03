@@ -16,7 +16,7 @@
                             <!-- div to add space between the image and the button -->
                             <div class="card-body"></div>
                             <!-- button link to create_posts.html -->
-                            <a href="{{ url_for('add_posts') }}" class="btn target font-bungee btn-sm" data-toggle="button" aria-pressed="false">Share Post &nbsp; <i class="fas fa-share-square"></i></a>
+                            <a type="link" href="{{ url_for('add_posts') }}" class="btn target font-bungee btn-sm" data-toggle="button" aria-pressed="false">Share Post &nbsp; <i class="fas fa-share-square"></i></a>
                         </div>
                     </div>
                 </div>
@@ -39,15 +39,15 @@
                             {% if session['username'] == post.created_by %}
                                 <div class="mb-1 d-flex justify-content-between">
                                         <!-- button link to delete post-->
-                                        <a href="{{ url_for('delete_post', post_id=post._id) }}" class="btn-post target font-bungee btn-sm" data-toggle="button" aria-pressed="false">Delete &nbsp; <i class="fas fa-trash-alt"></i></a>
+                                        <a type="link"href="{{ url_for('delete_post', post_id=post._id) }}" class="btn-post target font-bungee btn-sm" data-toggle="button" aria-pressed="false">Delete &nbsp; <i class="fas fa-trash-alt"></i></a>
                                         <!-- button link to edit post-->
-                                        <a href="{{ url_for('edit_post', post_id=post._id) }}" class="btn-post target font-bungee btn-sm" data-toggle="button" aria-pressed="false">Edit &nbsp; <i class="fas fa-edit"></i></a>
+                                        <a type="link" href="{{ url_for('edit_post', post_id=post._id) }}" class="btn-post target font-bungee btn-sm" data-toggle="button" aria-pressed="false">Edit &nbsp; <i class="fas fa-edit"></i></a>
                                         <!-- button link to comment post-->
-                                        <a href="{{ url_for('add_comment', post_id=post._id) }}" class="btn-post target font-bungee btn-sm" data-toggle="button" aria-pressed="false">Comment &nbsp; <i class="far fa-comment"></i></a>
+                                        <a type="link" href="{{ url_for('add_comment', post_id=post._id) }}" class="btn-post target font-bungee btn-sm" data-toggle="button" aria-pressed="false">Comment &nbsp; <i class="far fa-comment"></i></a>
                             {% else %}
                                 <div class="mb-1 d-flex justify-content-end">
                                     <!-- button link to comments -->
-                                    <a href="{{ url_for('add_comment', post_id=post._id) }}" class="btn-post target font-bungee btn-sm" data-toggle="button" aria-pressed="false">Comment &nbsp; <i class="far fa-comment"></i></a>
+                                    <a type="link" href="{{ url_for('add_comment', post_id=post._id) }}" class="btn-post target font-bungee btn-sm" data-toggle="button" aria-pressed="false">Comment &nbsp; <i class="far fa-comment"></i></a>
                                 </div>
                             {% endif %}
                         </div>
@@ -63,11 +63,11 @@
                 <div class="card col-sm-6 border-0 justify-content-md-center mt-5 absolute">
                     <!-- login button -->
                     <div class="text-center">
-                        <a href="{{ url_for('login') }}" class="btn target font-bungee btn2">Login &nbsp; <i class="fas fa-sign-in-alt"></i></a>
+                        <a type="link" href="{{ url_for('login') }}" class="btn target font-bungee btn2">Login &nbsp; <i class="fas fa-sign-in-alt"></i></a>
                     </div>
                     <!-- register button -->
                     <div class="text-center">
-                        <a href="{{ url_for('register') }}" class="btn target font-bungee mt-5">Register &nbsp; <i class="fas fa-sign-in-alt"></i></a>
+                        <a type="link" href="{{ url_for('register') }}" class="btn target font-bungee mt-5">Register &nbsp; <i class="fas fa-sign-in-alt"></i></a>
                     </div>
                 </div>
             </section>
