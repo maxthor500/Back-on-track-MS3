@@ -3,7 +3,7 @@ const map = L.map('map').setView([52.087852, -7.619566], 12);
 
 //render the map
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; <a type="link" href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    attribution: '&copy; <a type="button" href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
 }).addTo(map);
 
 //popup lat and lng with a click on the map

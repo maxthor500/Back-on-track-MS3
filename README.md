@@ -277,7 +277,10 @@ I had few time for this project, during this period I changed house and job so t
   * The language used to create the form and add content to the website.
 * CSS3
   * The language used to style the HTML5 elements.
-* Javascript
+* JavaScript
+  * JavaScript was used throughout the website to make the site interactive.
+* Python
+  * Python was used to build the backend functionality of the web app.
 * [Font Awesome](https://fontawesome.com)
 * [Bootstrap 5](https://getbootstrap.com/docs/5.0/getting-started/introduction/) used for every the component of the website.
 * [EmailJS](https://www.emailjs.com/) to make the form interactive.
@@ -298,15 +301,39 @@ I had few time for this project, during this period I changed house and job so t
 * [Google Images](https://www.google.com/images)
   * This was the source for the images in my project.
 * [Google Fonts](https://fonts.google.com/)
+* [dbdiagram.io](https://dbdiagram.io/home)
+  - I used dbdiagram.io to make a diagram of my database schema.
 * [W3Schools](https://www.w3schools.com/css/default.asp)
   - It was helpful with all my CSS doubts.
 * [Techsini](http://techsini.com/multi-mockup/index.php)
+  - Techsini was used to taking screenshots of the page at different screen sizes.
 * [AutoPrefixer](https://autoprefixer.github.io/)
   - This project used **AutoPrefixer** to make sure the CSS code is valid for all browsers.
 * [Typora](https://typora.io/)
 * [Chrome DevTools](https://developers.google.com/web/tools/chrome-devtools)
 
 *Note: I also found [Stack Overflow](https://stackoverflow.com/), [W3C Schools](https://www.w3schools.com/) and [MDN Web Docs](https://developer.mozilla.org/en-US/) helpful resources throughout the project, as well as the Code Institute Slack Community. 
+
+#### FLASK and extension used
+
+- [Flask](https://flask.palletsprojects.com/en/1.1.x/)
+
+  - Flask micro framework was used to build the web app using python code.
+
+- [Flask-bcrypt](https://flask-bcrypt.readthedocs.io/en/latest/)
+
+  - Flask bcrypt was used to has the users password before storing it in the database.
+
+- [Pymongo](https://pymongo.readthedocs.io/en/stable/index.html)
+
+  - Pymongo was used to interact with the database.
+
+- [Flask-Wtf](https://flask-wtf.readthedocs.io/en/stable/)
+
+  - Flask-Wtf was used to created the forms and validate them.
+
+  
+
 
 ## Testing
 
@@ -316,12 +343,12 @@ Testing information can be found in separate [TESTING.md](TESTING.md) file.
 
 ## Deployment
 
-This project was developed using the [Gitpod](https://www.gitpod.io/), committed to git and pushed to GitHub using the built-in function within git.
+This project was developed using the [Gitpod](https://www.gitpod.io/) at the begin and following with Visual Studio Code, committed to git and pushed to GitHub using the built-in function within git.
 
 To deploy this page to GitHub Pages from its [GitHub repository](https://github.com/maxthor500/Hirakudo-Academy), the following steps were taken:
 
 1. Log into GitHub.
-2. From the list of repositories on the screen, select **maxthor500/Hirakudo-Academy.
+2. From the list of repositories on the screen, select **maxthor500/Back-on-track-MS3.
 3. From the menu items near the top of the page, select **Settings**.
 4. Scroll down to the **GitHub Pages** section.
 5. Under **Source** click the drop-down menu labelled **None** and select **Master Branch**
@@ -361,26 +388,68 @@ git clone https://github.com/USERNAME/REPOSITORY
 
 Further reading and troubleshooting on cloning a repository from GitHub [here](https://help.github.com/en/articles/cloning-a-repository).
 
-## Credits
+#### Heroku
 
-#### 	Media
+- The project has been deployed on heroku. To achieve this I followed the following steps.
 
-- Hirakudo Academy Logo.
-- My photo of the dojo.
+1. Create a requirements.tx file typing the following command into your terminal. 
+
+   ```
+       pip3 freeze --local > requirements.txt
+   ```
+
+2. Then create the procfile by typing the following comand into the terminal.
+
+   ``` 
+      echo web: python app.py > Procfile
+   ```
+
+3. Once your procfile has been created make sure there is no blank line at the end of the procfile as it can cause isssues if there is.
+
+4. Signin to Heroku.com and select new button then the create a new app option.
+
+   <img src=".\assets\heroku\new_app.png" alt="new_app" style="zoom:50%;" />
+
+5. Then name your app and select your region. Your name must be unique.
+
+   <img src=".\assets\heroku\name_app.png" alt="name_app" style="zoom:50%;" />
+
+6. Then click the create app button.
+
+7. On the next screen click the connect to github buttton.
+
+8. Then add your projects repository name and search for it.
+
+   <img src=".\assets\heroku\heroku_github.png" alt="heroku_github" style="zoom:50%;" />
+
+9. Once the repository has been found click connect button.
+
+10. Then click on the setting button
+        <img src=".\assets\heroku\heroku_settings.png" alt="heroku_settings" style="zoom:50%;" />
+
+11. Then click on the reveal config variables button.
+
+<img src=".\assets\heroku\config_var.png" alt="config_var" style="zoom:50%;" />
+
+12. Add your config variable key values to this section.
+
+    <img src=".\assets\heroku\config_key_value.png" alt="config_key_value" style="zoom:50%;" />
+
+13. Confirm that both your Procfile and your requirements have been commited and pushed to github.
+
+
+14. Then enable automatic deploys and then click the deploy branch button.
+
+    <img src=".\assets\heroku\heroku_automatic.png" alt="heroku_automatic" style="zoom:50%;" />
+
+15. Heroku will now build and deploy your application. It will also automatically update it everytime you add a commit to your github repository.
+
+## CreditsMedia
 
 #### 	Code
 
-- from [JaeWong91](https://github.com/JaeWong91/MS2-Marvel-Game)  I used to code the class of the memory game.
-
-- from [Code-Sketch](https://github.com/code-sketch/memory-game/) I used to style the memory game.
-
-- from [laschaNoz](https://github.com/lashaNoz/Calendar/) I used the calendar script and the calendar style.
-
-- from [W3Schools](https://www.w3schools.com/css/default.asp) I took the button and the modals styles.
-
-- from [CodingNepal](https://www.codingnepalweb.com/2020/04/responsive-menu-bar-in-html-css.html) I used to style the navbar.
-
-- from [CodingSnow](https://www.codingsnow.com/2021/01/responsive-sidebar-menu-dashboard.html ) I used to style the sidebar.
+- from [Spencer Barriball](https://github.com/5pence/recipeGlut)  I used to code to login and registration forms.
+- from [BrianWhelanDublin](https://github.com/BrianWhelanDublin/milestone-project-3) I used to write my readme
 
 
 #### 	Acknowledgements
@@ -388,10 +457,9 @@ Further reading and troubleshooting on cloning a repository from GitHub [here](h
 I would like to thank the following:
 
 * My mentor, **Spencer Barriball**, for his guidance, wisdom and encouragement throughout the project.
-
 * **CI Staff** and **Slack Community** for their assistance with minor coding issues.
-
-* My fiance, **Vanessa**, for his users stories.
+* My fiancée, **Vanessa** and my sister **Rosita** for the users stories.
+* My cousin [AriannaDiBiaseEventi](https://www.instagram.com/ariannadibiaseventi/ ) for the hero image
 
 **The content of this website is for educational purposes only.**
 

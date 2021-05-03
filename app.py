@@ -6,8 +6,9 @@ from flask import (
 from flask_pymongo import PyMongo, DESCENDING
 from bson.objectid import ObjectId
 from forms import (
-    RegisterForm, LoginForm, CreatePostForm, 
-    CreateCommentForm, UpdateProfileForm, ConfirmDeleteAccount)
+    RegisterForm, LoginForm, CreatePostForm,
+    CreateCommentForm, UpdateProfileForm,
+    ConfirmDeleteAccount)
 import bcrypt
 if os.path.exists("env.py"):
     import env
@@ -21,12 +22,13 @@ app.secret_key = os.environ.get("SECRET_KEY")
 
 mongo = PyMongo(app)
 
-#index section
+
+# index section
 @app.route("/")
 @app.route('/home')
 def index():
     """Render index template and when the user is logged every post is shown"""
-    #get posts
+    # get posts
     posts = get_posts()
     return render_template('index.html', title='Home', posts=posts)
 
