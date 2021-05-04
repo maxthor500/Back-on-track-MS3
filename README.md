@@ -1,4 +1,6 @@
-# <img src=".\static\images\LogoBOT.svg" alt="BOT logo" style="zoom:5%;" /> Back On Track
+<img src=".\static\images\LogoBOT.svg" alt="BOT logo" style="zoom:5%;" /> 
+
+# Back On Track
 
 **Code Institute - Milestone Project 3**
 
@@ -252,7 +254,8 @@ I made the BOT logo, an hero image made from my cousin [AriannaDiBiaseEventi](ht
 
     #### Error 404 page
 
-    ![404_page](.\assets\readme_images\404_page.jpg)
+    <img src=".\assets\readme_images\404_page.jpg" alt="404_page" style="zoom:30%;" />
+
 
 ### Features left to Implement
 
