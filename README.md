@@ -1,5 +1,3 @@
-<img src=".\static\images\LogoBOT.svg" alt="BOT logo" style="zoom:5%;" /> 
-
 # Back On Track
 
 **Code Institute - Milestone Project 3**
