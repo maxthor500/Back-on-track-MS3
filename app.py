@@ -40,7 +40,7 @@ def get_posts():
     return posts
 
 
-# register user section
+# login user section
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     """Login handler"""
